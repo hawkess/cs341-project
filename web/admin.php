@@ -1,6 +1,5 @@
 <?php
-
-require("cms.php");
+require_once("cms.php");
 session_start();
 $action = isset($_GET['action']) ? $_GET['action'] : "";
 $username = isset($_SESSION['username']) ? $_SESSION['username'] : "";
@@ -32,29 +31,21 @@ switch ($action) {
 
 
 function login() {
-
   $results = array();
   $results['pageTitle'] = "CSE 341 CMS Login";
 
   if (isset($_POST['login'])) {
-
-    // User has posted the login form: attempt to log the user in
-
     if ($_POST['username'] == ADMIN_USERNAME && $_POST['password'] == ADMIN_PASSWORD) {
-
-      // Login successful: Create a session and redirect to the admin homepage
       $_SESSION['username'] = ADMIN_USERNAME;
-      header("Location: admin.php");
+      $_SESSION['loggedin'] = true;
+      header("Location: /welcome.php");
 
     } else {
-
-      // Login failed: display an error message to the user
       $results['errorMessage'] = "Incorrect username or password. Please try again.";
       require(TEMPLATE_PATH . "/login.php");
     }
 
   } else {
-
     // User has not posted the login form yet: display the form
     require(TEMPLATE_PATH . "/login.php");
   }
@@ -63,8 +54,10 @@ function login() {
 
 
 function logout() {
-  unset($_SESSION['username']);
-  header("Location: admin.php");
+    $_SESSION = array();
+    session_destroy();
+    header("location: " TEMPLATE_PATH . "/login.php");
+    exit;
 }
 
 
