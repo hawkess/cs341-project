@@ -1,6 +1,5 @@
 <?php
-require_once("cms.php");
-
+require("cms.php");
 $action = isset($_GET['action']) ? $_GET['action'] : "";
 
 switch ($action) {
@@ -13,7 +12,6 @@ switch ($action) {
   default:
     homepage();
 }
-
 
 function archive() {
   $results = array();

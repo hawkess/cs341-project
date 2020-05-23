@@ -16,7 +16,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     if(empty(trim($_POST["new_password"]))){
         $new_password_err = "Please enter the new password.";     
     } elseif(strlen(trim($_POST["new_password"])) < 6){
-        $new_password_err = "Password must have atleast 6 characters.";
+        $new_password_err = "Password must have at least 6 characters.";
     } else{
         $new_password = trim($_POST["new_password"]);
     }
@@ -54,6 +54,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 ?> 
 <?php include "templates/include/header.php" ?>
 <body>
+   <?php include "templates/include/navbar.php" ?>
     <div class="container-fluid">
         <h2>Reset Password</h2>
         <p>Please fill out this form to reset your password.</p>

@@ -1,7 +1,85 @@
+<?php
+session_start();
+ 
+if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
+    header("location: welcome.php");
+    exit;
+}
+require_once "config.php";
+ 
+$username = "";
+$password = "";
+$username_err = "";
+$password_err = "";
+ 
+if($_SERVER["REQUEST_METHOD"] == "POST"){
+ 
+    if(empty(trim($_POST["username"]))){
+        $username_err = "Please enter username.";
+    } else{
+        $username = trim($_POST["username"]);
+    }
+    
+    if(empty(trim($_POST["password"]))){
+        $password_err = "Please enter your password.";
+    } else{
+        $password = trim($_POST["password"]);
+    }
+    
+    if(empty($username_err) && empty($password_err)){
+        $sql = "SELECT id, username, password FROM users WHERE username = :username";
+        
+        if($stmt = $pdo->prepare($sql)){
+            $stmt->bindParam(":username", $param_username, PDO::PARAM_STR);
+            
+            // Set parameters
+            $param_username = trim($_POST["username"]);
+            
+            // Attempt to execute the prepared statement
+            if($stmt->execute()){
+                // Check if username exists, if yes then verify password
+                if($stmt->rowCount() == 1){
+                    if($row = $stmt->fetch()){
+                        $id = $row["id"];
+                        $username = $row["username"];
+                        $hashed_password = $row["password"];
+                        if(password_verify($password, $hashed_password)){
+                            // Password is correct, so start a new session
+                            session_start();
+                            
+                            // Store data in session variables
+                            $_SESSION["loggedin"] = true;
+                            $_SESSION["id"] = $id;
+                            $_SESSION["username"] = $username;                            
+                            
+                            // Redirect user to welcome page
+                            header("location: welcome.php");
+                        } else{
+                            // Display an error message if password is not valid
+                            $password_err = "The password you entered was not valid.";
+                        }
+                    }
+                } else{
+                    // Display an error message if username doesn't exist
+                    $username_err = "No account found with that username.";
+                }
+            } else{
+                echo "Oops! Something went wrong. Please try again later.";
+            }
+
+            // Close statement
+            unset($stmt);
+        }
+    }
+    
+    // Close connection
+    unset($pdo);
+}
+?>
 <?php include "templates/include/header.php" ?>
-   <body>
+<body>
    <?php include "templates/include/navbar.php" ?>
-    <div class="container-fluid">
+    <div class="wrapper">
         <h2>Login</h2>
         <p>Please fill in your credentials to login.</p>
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
@@ -20,6 +98,6 @@
             </div>
             <p>Don't have an account? <a href="register.php">Sign up now</a>.</p>
         </form>
-    </div>    
+    </div>
 </body>
 </html>

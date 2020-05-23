@@ -18,10 +18,8 @@ class Article
         $this->created = (int) $data['created'];
     if (isset($data['title']))
         $this->title = preg_replace ("/[^\.\,\-\_\'\"\@\?\!\:\$ a-zA-Z0-9()]/", "", $data['title']);
-    if (isset($data['slug']))
-        $this->slug = preg_replace ("/[^\.\,\-\_\'\"\@\?\!\:\$ a-zA-Z0-9()]/", "", $data['slug']);
     if (isset($data['content']))
-        $this->content = $data['content'];
+        $this->content = htmlspecialchars($data['content']);
   }
 
   public function storeFormValues ($params) {
@@ -65,7 +63,6 @@ class Article
       $list[] = $article;
     }
 
-    // Now get the total number of articles that matched the criteria
     $sql = "SELECT FOUND_ROWS() AS totalRows";
     $totalRows = $conn->query($sql)->fetch();
     $conn = null;
@@ -73,18 +70,14 @@ class Article
   }
 
   public function insert() {
-
-    // Does the Article object already have an ID?
     if (!is_null($this->id)) 
         trigger_error ("Article::insert(): Attempt to insert an Article object that already has its ID property set (to $this->id).", E_USER_ERROR);
 
-    // Insert the Article
     $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-    $sql = "INSERT INTO articles (created, title, slug, content) VALUES (FROM_UNIXTIME(:created), :title, :slug, :content)";
+    $sql = "INSERT INTO articles (created, title, slug, content) VALUES (FROM_UNIXTIME(:created), :title, :content)";
     $st = $conn->prepare ($sql);
     $st->bindValue(":created", $this->created, PDO::PARAM_INT);
     $st->bindValue(":title", $this->title, PDO::PARAM_STR);
-    $st->bindValue(":slug", $this->slug, PDO::PARAM_STR);
     $st->bindValue(":content", $this->content, PDO::PARAM_STR);
     $st->execute();
     $this->id = $conn->lastInsertId();
@@ -92,17 +85,13 @@ class Article
   }
 
   public function update() {
-
-    // Does the Article object have an ID?
     if (is_null($this->id)) trigger_error ("Article::update(): Attempt to update an Article object that does not have its ID property set.", E_USER_ERROR);
    
-    // Update the Article
     $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-    $sql = "UPDATE articles SET created=FROM_UNIXTIME(:created), title=:title, slug=:slug, content=:content WHERE id = :id";
+    $sql = "UPDATE articles SET created=FROM_UNIXTIME(:created), title=:title, content=:content WHERE id = :id";
     $st = $conn->prepare ($sql);
     $st->bindValue(":created", $this->created, PDO::PARAM_INT);
     $st->bindValue(":title", $this->title, PDO::PARAM_STR);
-    $st->bindValue(":slug", $this->slug, PDO::PARAM_STR);
     $st->bindValue(":content", $this->content, PDO::PARAM_STR);
     $st->bindValue(":id", $this->id, PDO::PARAM_INT);
     $st->execute();
@@ -110,11 +99,8 @@ class Article
   }
 
   public function delete() {
-
-    // Does the Article object have an ID?
     if (is_null($this->id)) trigger_error ("Article::delete(): Attempt to delete an Article object that does not have its ID property set.", E_USER_ERROR);
 
-    // Delete the Article
     $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
     $st = $conn->prepare ("DELETE FROM articles WHERE id = :id LIMIT 1");
     $st->bindValue(":id", $this->id, PDO::PARAM_INT);
