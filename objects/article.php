@@ -48,7 +48,7 @@ class Article
     if ($row) return new Article($row);
   }
 
-  public static function getList($numRows=1 000) {
+  public static function getList($numRows=1000) {
     $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
     $sql = "SELECT SQL_CALC_FOUND_ROWS *, UNIX_TIMESTAMP(created) AS created FROM articles
             ORDER BY created DESC LIMIT :numRows";
