@@ -82,7 +82,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 <body>
    <?php include "include/navbar.php" ?>
     <div class="container-fluid">
-       <div class="w-25 m-auto">
+       <div class="w-25 m-auto py-5">
             <h2>Login</h2>
             <p>Please fill in your credentials to login.</p>
             <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
