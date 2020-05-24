@@ -5,9 +5,9 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     exit;
 }
 ?>
-<?php include "templates/include/header.php" ?>
+<?php include "include/header.php" ?>
 <body>
-   <?php include "templates/include/navbar.php" ?>
+   <?php include "include/navbar.php" ?>
     <div class="page-header">
         <h1>Hello, <b><?php echo htmlspecialchars($_SESSION["username"]); ?></b>.</h1>
     </div>

@@ -1,6 +1,6 @@
-<?php include "templates/include/header.php" ?>
+<?php include "include/header.php" ?>
 <body>
-   <?php include "templates/include/navbar.php" ?>
+   <?php include "include/navbar.php" ?>
     <div class="container-fluid">
         <ul id="headlines">
             <?php foreach ($results['articles'] as $article) { ?>

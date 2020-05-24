@@ -1,6 +1,6 @@
-<?php include "templates/include/header.php" ?>
+<?php include "../include/header.php" ?>
      <body>
-     <?php include "templates/include/navbar.php" ?>
+     <?php include "../include/navbar.php" ?>
       <div id="adminHeader">
         <h2>CSE 341 CMS Admin</h2>
         <p>You are logged in as <b><?php echo htmlspecialchars($_SESSION['username'])?></b>. <a href="admin.php?action=logout"?>Log out</a></p>

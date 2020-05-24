@@ -1,6 +1,6 @@
-<?php include "templates/include/header.php" ?>
+<?php include "include/header.php" ?>
 <body>
-   <?php include "templates/include/navbar.php" ?>
+   <?php include "include/navbar.php" ?>
     <div class="container-fluid">
         <h1>Article Archive</h1>
         <ul id="headlines" class="archive">

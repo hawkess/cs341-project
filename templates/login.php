@@ -76,9 +76,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     unset($pdo);
 }
 ?>
-<?php include "templates/include/header.php" ?>
+<?php include "include/header.php" ?>
 <body>
-   <?php include "templates/include/navbar.php" ?>
+   <?php include "include/navbar.php" ?>
     <div class="wrapper">
         <h2>Login</h2>
         <p>Please fill in your credentials to login.</p>
