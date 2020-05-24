@@ -5,7 +5,7 @@ if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
     header("location: welcome.php");
     exit;
 }
-require_once "config.php";
+require_once "cms.php";
  
 $username = "";
 $password = "";
