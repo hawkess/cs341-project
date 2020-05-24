@@ -16,6 +16,9 @@ switch ($action) {
   case 'logout':
     logout();
     break;
+  case 'register':
+    register();
+    break;
   case 'newArticle':
     newArticle();
     break;
@@ -38,17 +41,18 @@ function login() {
     if ($_POST['username'] == ADMIN_USERNAME && $_POST['password'] == ADMIN_PASSWORD) {
       $_SESSION['username'] = ADMIN_USERNAME;
       $_SESSION['loggedin'] = true;
-      header("Location: /welcome.php");
+      header("Location: welcome.php");
 
     } else {
       $results['errorMessage'] = "Incorrect username or password. Please try again.";
-      require(TEMPLATE_PATH . "login.php");
+      require("login.php");
     }
 
-  } else {
-    // User has not posted the login form yet: display the form
-    require(TEMPLATE_PATH . "login.php");
-  }
+  } 
+    else 
+    {
+        require("login.php");
+    }
 
 }
 
@@ -56,10 +60,15 @@ function login() {
 function logout() {
     $_SESSION = array();
     session_destroy();
-    header("location: " TEMPLATE_PATH . "login.php");
+    header("location: admin.php?action=login");
     exit;
 }
 
+function register() {
+  $results = array();
+    $results['pageTitle'] = "CSE 341 CMS Register";
+  require("register.php");
+}
 
 function newArticle() {
 
@@ -83,7 +92,7 @@ function newArticle() {
 
     // User has not posted the article edit form yet: display the form
     $results['article'] = new Article;
-    require(TEMPLATE_PATH . "/admin/editArticle.php");
+    require("/admin/editArticle.php");
   }
 
 }
@@ -116,7 +125,7 @@ function editArticle() {
 
     // User has not posted the article edit form yet: display the form
     $results['article'] = Article::getById((int)$_GET['articleId']);
-    require(TEMPLATE_PATH . "/admin/editArticle.php");
+    require("/admin/editArticle.php");
   }
 
 }
