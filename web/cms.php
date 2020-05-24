@@ -10,7 +10,7 @@ $dbparams = array(
               );
 ini_set("display_errors", true);
 date_default_timezone_set("America/Phoenix");
-define("DB_DSN", $dbparams['driver'] + ":host=" + $dbparams['host'] + ';' + $dbparams['dbname']);
+define("DB_DSN", $dbparams['driver'] . ":host=" . $dbparams['host'] . ";" . $dbparams['dbname']);
 define("DB_USERNAME", $dbparams['user']);
 define("DB_PASSWORD", $dbparams['password']);
 define("CLASS_PATH", "../objects");
