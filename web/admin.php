@@ -42,12 +42,12 @@ function login() {
 
     } else {
       $results['errorMessage'] = "Incorrect username or password. Please try again.";
-      require(TEMPLATE_PATH . "/login.php");
+      require(TEMPLATE_PATH . "login.php");
     }
 
   } else {
     // User has not posted the login form yet: display the form
-    require(TEMPLATE_PATH . "/login.php");
+    require(TEMPLATE_PATH . "login.php");
   }
 
 }
@@ -56,7 +56,7 @@ function login() {
 function logout() {
     $_SESSION = array();
     session_destroy();
-    header("location: " TEMPLATE_PATH . "/login.php");
+    header("location: " TEMPLATE_PATH . "login.php");
     exit;
 }
 

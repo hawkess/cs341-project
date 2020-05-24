@@ -19,7 +19,7 @@ function archive() {
   $results['articles'] = $data['results'];
   $results['totalRows'] = $data['totalRows'];
   $results['pageTitle'] = "CSE 341 CMS Archive";
-  require(TEMPLATE_PATH . "/archive.php");
+  require(TEMPLATE_PATH . "archive.php");
 }
 
 function viewArticle() {
@@ -31,7 +31,7 @@ function viewArticle() {
   $results = array();
   $results['article'] = Article::getById((int)$_GET["articleId"]);
   $results['pageTitle'] = "CSE 341 CMS | " . $results['article']->title . "";
-  require(TEMPLATE_PATH . "/view.php");
+  require(TEMPLATE_PATH . "view.php");
 }
 
 function homepage() {
@@ -40,6 +40,6 @@ function homepage() {
   $results['articles'] = $data['results'];
   $results['totalRows'] = $data['totalRows'];
   $results['pageTitle'] = "CSE 341 CMS";
-  require(TEMPLATE_PATH . "/homepage.php");
+  require(TEMPLATE_PATH . "homepage.php");
 }
 ?>
