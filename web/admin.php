@@ -1,6 +1,6 @@
 <?php
 require_once("cms.php");
-session_start();
+if(session_status() === PHP_SESSION_NONE) session_start();
 $action = isset($_GET['action']) ? $_GET['action'] : "";
 $username = isset($_SESSION['username']) ? $_SESSION['username'] : "";
 
