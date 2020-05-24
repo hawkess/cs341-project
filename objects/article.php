@@ -7,7 +7,6 @@ class Article
   public $id = null;
   public $created = null;
   public $title = null;
-  public $slug = null;
   public $content = null;
 
 
@@ -48,9 +47,9 @@ class Article
     if ($row) return new Article($row);
   }
 
-  public static function getList($numRows=1000) {
+  public static function getList($numRows=500) {
     $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-    $sql = "SELECT SQL_CALC_FOUND_ROWS *, UNIX_TIMESTAMP(created) AS created FROM articles
+    $sql = "SELECT *, UNIX_TIMESTAMP(created) AS created FROM articles
             ORDER BY created DESC LIMIT :numRows";
 
     $st = $conn->prepare($sql);
@@ -63,7 +62,7 @@ class Article
       $list[] = $article;
     }
 
-    $sql = "SELECT FOUND_ROWS() AS totalRows";
+    $sql = "SELECT COUNT(*) AS totalRows";
     $totalRows = $conn->query($sql)->fetch();
     $conn = null;
     return (array ("results" => $list, "totalRows" => $totalRows[0]));
