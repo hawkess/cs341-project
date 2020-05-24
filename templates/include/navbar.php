@@ -5,10 +5,10 @@
   </button>
   <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
     <div class="navbar-nav">
-      <a class="nav-item nav-link" href="homepage.php">Home</a>
+      <a class="nav-item nav-link" href="index.php">Home</a>
       <a class="nav-item nav-link" href="view.php">Articles</a>
-      <a class="nav-item nav-link" href="#">Archive</a>
-      <a class="nav-item nav-link" href="#">Login</a>
+      <a class="nav-item nav-link" href="index.php&amp;action=archive">Archive</a>
+      <a class="nav-item nav-link" href="admin.php&amp;action=login">Login</a>
     </div>
   </div>
 </nav>
