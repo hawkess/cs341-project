@@ -13,10 +13,9 @@ date_default_timezone_set("America/Phoenix");
 define("DB_DSN", $dbparams['driver'] . ":host=" . $dbparams['host'] . ";dbname=". $dbparams['dbname']);
 define("DB_USERNAME", $dbparams['user']);
 define("DB_PASSWORD", $dbparams['password']);
-define("CLASS_PATH", "../objects");
 define("TEMPLATE_PATH", "");
 define("HOMEPAGE_NUM_ARTICLES", 5);
-require(CLASS_PATH . "/article.php");
+require("../objects/article.php");
 
 function handleException($exception) {
   echo "Sorry, a problem occurred. Please try later.";

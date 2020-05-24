@@ -1,10 +1,10 @@
 <?php
 session_start();
 if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
-    header("location: login.php");
+    header("location: admin.php?action=login");
     exit;
 }
-require_once "config.php";
+require_once "cms.php";
  
 $new_password = "";
 $confirm_password = "";
@@ -41,7 +41,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             
             if($stmt->execute()){
                 session_destroy();
-                header("location: login.php");
+                header("location: admin.php?action=login");
                 exit();
             } else{
                 echo "Oops! Something went wrong. Please try again later.";
@@ -71,7 +71,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             </div>
             <div class="form-group">
                 <input type="submit" class="btn btn-primary" value="Submit">
-                <a class="btn btn-link" href="welcome.php">Cancel</a>
+                <a class="btn btn-link" href="index.php?action=homepage">Cancel</a>
             </div>
         </form>
     </div>    
