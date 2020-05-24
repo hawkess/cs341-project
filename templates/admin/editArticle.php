@@ -21,8 +21,8 @@
             <textarea name="content" id="content" placeholder="The HTML content of the article" required maxlength="100000" style="height: 30em;"><?php echo htmlspecialchars( $results['article']->content )?></textarea>
           </li>
           <li>
-            <label for="publicationDate">Publication Date</label>
-            <input type="date" name="publicationDate" id="publicationDate" placeholder="YYYY-MM-DD" required maxlength="10" value="<?php echo $results['article']->created ? date("Y-m-d", $results['article']->created) : "" ?>" />
+            <label for="created">Publication Date</label>
+            <input type="date" name="created" id="created" placeholder="YYYY-MM-DD" required maxlength="10" value="<?php echo $results['article']->created ? date("Y-m-d", $results['article']->created) : "" ?>" />
           </li>
         </ul>
         <div class="buttons">
