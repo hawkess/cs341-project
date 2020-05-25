@@ -47,7 +47,7 @@ class Article
 
   public static function getList($numRows=1000) {
     $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-    $sql = "SELECT *, created AS created FROM articles
+    $sql = "SELECT *, extract(epoch FROM created) AS created FROM articles
             ORDER BY created DESC LIMIT :numRows";
 
     $st = $conn->prepare($sql);
