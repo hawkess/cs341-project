@@ -1,5 +1,9 @@
 <?php
+if(session_status() === PHP_SESSION_NONE) session_start();
 require_once "cms.php";
+
+$results = array();
+$results['pageTitle'] = "CSE 341 CMS Register";
  
 $username = "";
 $password = "";
@@ -9,8 +13,7 @@ $password_err = "";
 $confirm_password_err = "";
  
 if($_SERVER["REQUEST_METHOD"] == "POST")
-{
- 
+{ 
     if(empty(trim($_POST["username"])))
     {
         $username_err = "Please enter a username.";
@@ -29,11 +32,13 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
                 if($stmt->rowCount() == 1)
                 {
                     $username_err = "This username is already taken.";
-                } else
+                } 
+                else
                 {
                     $username = trim($_POST["username"]);
                 }
-            } else
+            } 
+            else
             {
                 echo "Oops! Something went wrong. Please try again later.";
             }
@@ -68,8 +73,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
     }
     
     if(empty($username_err) && empty($password_err) && empty($confirm_password_err))
-    {
-        
+    {        
         $sql = "INSERT INTO users (username, password) VALUES (:username, :password)";
          
         if($stmt = $pdo->prepare($sql))
@@ -83,7 +87,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
             if($stmt->execute())
             {
                 header("location: admin.php?action=login");
-            } else
+            } 
+            else
             {
                 echo "Something went wrong. Please try again later.";
             }
