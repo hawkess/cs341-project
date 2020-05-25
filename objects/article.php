@@ -33,7 +33,7 @@ class Article
 
   public static function getById($id) {
     $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-    $sql = "SELECT *, TO_TIMESTAMP(created) AS created FROM articles WHERE id = :id";
+    $sql = "SELECT *, extract(EPOCH FROM date_created) AS created FROM articles WHERE id = :id";
     $st = $conn->prepare($sql);
     $st->bindValue(":id", $id, PDO::PARAM_INT);
     $st->execute();
