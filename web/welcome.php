@@ -1,7 +1,7 @@
 <?php
 if(session_status() === PHP_SESSION_NONE) session_start();
 if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
-    header("location: login.php");
+    header("location: admin.php?action=login");
     exit;
 }
 ?>
@@ -12,8 +12,8 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
         <h1>Hello, <b><?php echo htmlspecialchars($_SESSION["username"]); ?></b>.</h1>
     </div>
     <p>
-        <a href="resetpassword.php" class="btn btn-warning">Reset Your Password</a>
-        <a href=".?action=logout" class="btn btn-danger">Sign Out of Your Account</a>
+        <a href="admin.php?action=resetpassword" class="btn btn-warning">Reset Your Password</a>
+        <a href="admin.php?action=logout" class="btn btn-danger">Sign Out of Your Account</a>
     </p>
 </body>
 </html>

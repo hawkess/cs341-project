@@ -1,7 +1,8 @@
 <?php
 if(session_status() === PHP_SESSION_NONE) session_start();
 
-if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
+if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true)
+{
     header("location: welcome.php");
     exit;
 }
@@ -18,63 +19,65 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
  
     if(empty(trim($_POST["username"]))){
         $username_err = "Please enter username.";
-    } else{
+    } 
+    else
+    {
         $username = trim($_POST["username"]);
     }
     
-    if(empty(trim($_POST["password"]))){
+    if(empty(trim($_POST["password"])))
+    {
         $password_err = "Please enter your password.";
-    } else{
+    } 
+    else
+    {
         $password = trim($_POST["password"]);
-    }
-    
-    if(empty($username_err) && empty($password_err)){
+    }    
+    if(empty($username_err) && empty($password_err))
+    {
         $sql = "SELECT id, username, password FROM users WHERE username = :username";
         
-        if($stmt = $pdo->prepare($sql)){
+        if($stmt = $pdo->prepare($sql))
+        {
             $stmt->bindParam(":username", $param_username, PDO::PARAM_STR);
-            
-            // Set parameters
             $param_username = trim($_POST["username"]);
             
-            // Attempt to execute the prepared statement
-            if($stmt->execute()){
-                // Check if username exists, if yes then verify password
-                if($stmt->rowCount() == 1){
-                    if($row = $stmt->fetch()){
+            if($stmt->execute())
+            {
+                if($stmt->rowCount() == 1)
+                {
+                    if($row = $stmt->fetch())
+                    {
                         $id = $row["id"];
                         $username = $row["username"];
                         $hashed_password = $row["password"];
-                        if(password_verify($password, $hashed_password)){
-                            // Password is correct, so start a new session
-                            session_start();
+                        if(password_verify($password, $hashed_password))
+                        {
+                            if(session_status() === PHP_SESSION_NONE) session_start();
                             
-                            // Store data in session variables
                             $_SESSION["loggedin"] = true;
                             $_SESSION["id"] = $id;
                             $_SESSION["username"] = $username;                            
-                            
-                            // Redirect user to welcome page
                             header("location: welcome.php");
-                        } else{
-                            // Display an error message if password is not valid
+                        } 
+                        else
+                        {
                             $password_err = "The password you entered was not valid.";
                         }
                     }
-                } else{
-                    // Display an error message if username doesn't exist
+                } 
+                else
+                {
                     $username_err = "No account found with that username.";
                 }
-            } else{
+            } 
+            else
+            {
                 echo "Oops! Something went wrong. Please try again later.";
             }
-
-            // Close statement
             unset($stmt);
         }
-    }
-    
-    // Close connection
+    }    
     unset($pdo);
 }
 ?>
@@ -99,7 +102,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 <div class="form-group">
                     <input type="submit" class="btn btn-primary" value="Login">
                 </div>
-                <p>Don't have an account? <a href="index.php?action=register">Sign up now</a>.</p>
+                <p>Don't have an account? <a href="admin.php?action=register">Sign up now</a>.</p>
             </form>
         </div>
     </div>

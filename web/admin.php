@@ -4,12 +4,14 @@ if(session_status() === PHP_SESSION_NONE) session_start();
 $action = isset($_GET['action']) ? $_GET['action'] : "";
 $username = isset($_SESSION['username']) ? $_SESSION['username'] : "";
 
-if ($action != "login" && $action != "logout" && !$username) {
+if ($action != "login" && $action != "logout" && !$username) 
+{
   login();
   exit;
 }
 
-switch ($action) {
+switch ($action) 
+{
   case 'login':
     login();
     break;
@@ -37,23 +39,24 @@ function login() {
   $results = array();
   $results['pageTitle'] = "CSE 341 CMS Login";
 
-  if (isset($_POST['login'])) {
-    if ($_POST['username'] == ADMIN_USERNAME && $_POST['password'] == ADMIN_PASSWORD) {
+  if (isset($_POST['login'])) 
+  {
+    if ($_POST['username'] == ADMIN_USERNAME && $_POST['password'] == ADMIN_PASSWORD) 
+    {
       $_SESSION['username'] = ADMIN_USERNAME;
       $_SESSION['loggedin'] = true;
       header("Location: welcome.php");
-
-    } else {
-      $results['errorMessage'] = "Incorrect username or password. Please try again.";
-      require("login.php");
-    }
-
+    } 
+      else 
+      {
+          $results['errorMessage'] = "Incorrect username or password. Please try again.";
+          require("login.php");
+      }
   } 
     else 
     {
         require("login.php");
     }
-
 }
 
 
@@ -65,35 +68,39 @@ function logout() {
 }
 
 function register() {
-  $results = array();
+    $results = array();
     $results['pageTitle'] = "CSE 341 CMS Register";
-  require("register.php");
+    require("register.php");
+}
+
+function resetPassword() {
+    $results = array();
+    $results['pageTitle'] = "CSE 341 CMS Reset Password";
+    require("resetpassword.php");
 }
 
 function newArticle() {
 
-  $results = array();
-  $results['pageTitle'] = "New Article";
-  $results['formAction'] = "newArticle";
+    $results = array();
+    $results['pageTitle'] = "New Article";
+    $results['formAction'] = "newArticle";
 
-  if (isset($_POST['saveChanges'])) {
-
-    // User has posted the article edit form: save the new article
-    $article = new Article;
-    $article->storeFormValues($_POST);
-    $article->insert();
-    header("Location: admin.php?status=changesSaved");
-
-  } elseif (isset($_POST['cancel'])) {
-
-    // User has cancelled their edits: return to the article list
-    header("Location: admin.php");
-  } else {
-
-    // User has not posted the article edit form yet: display the form
-    $results['article'] = new Article;
-    require("/admin/editArticle.php");
-  }
+    if (isset($_POST['saveChanges'])) 
+    {
+        $article = new Article;
+        $article->storeFormValues($_POST);
+        $article->insert();
+        header("Location: admin.php?status=changesSaved");
+    } 
+    elseif (isset($_POST['cancel'])) 
+    {
+        header("Location: admin.php");
+    }
+    else 
+    {
+        $results['article'] = new Article;
+        require("/admin/editArticle.php");
+    }
 
 }
 
@@ -104,36 +111,35 @@ function editArticle() {
   $results['pageTitle'] = "Edit Article";
   $results['formAction'] = "editArticle";
 
-  if (isset($_POST['saveChanges'])) {
-
-    // User has posted the article edit form: save the article changes
-
-    if (!$article = Article::getById((int)$_POST['articleId'])) {
-      header("Location: admin.php?error=articleNotFound");
-      return;
+    if (isset($_POST['saveChanges'])) 
+    {
+        if (!$article = Article::getById((int)$_POST['articleId'])) 
+        {
+          header("Location: admin.php?error=articleNotFound");
+          return;
+        }
+        
+        $article->storeFormValues($_POST);
+        $article->update();
+        header("Location: admin.php?status=changesSaved");
+    } 
+    elseif (isset($_POST['cancel'])) 
+    {
+        header("Location: admin.php");
+    } 
+    else 
+    {
+        $results['article'] = Article::getById((int)$_GET['articleId']);
+        require("/admin/editArticle.php");
     }
-
-    $article->storeFormValues($_POST);
-    $article->update();
-    header("Location: admin.php?status=changesSaved");
-
-  } elseif (isset($_POST['cancel'])) {
-
-    // User has cancelled their edits: return to the article list
-    header("Location: admin.php");
-  } else {
-
-    // User has not posted the article edit form yet: display the form
-    $results['article'] = Article::getById((int)$_GET['articleId']);
-    require("/admin/editArticle.php");
-  }
 
 }
 
 
 function deleteArticle() {
 
-  if (!$article = Article::getById((int)$_GET['articleId'])) {
+  if (!$article = Article::getById((int)$_GET['articleId'])) 
+  {
     header("Location: admin.php?error=articleNotFound");
     return;
   }
@@ -150,16 +156,16 @@ function listArticles() {
   $results['totalRows'] = $data['totalRows'];
   $results['pageTitle'] = "All Articles";
 
-  if (isset($_GET['error'])) {
+  if (isset($_GET['error'])) 
+  {
     if ($_GET['error'] == "articleNotFound") $results['errorMessage'] = "Error: Article not found.";
   }
 
-  if (isset($_GET['status'])) {
+  if (isset($_GET['status'])) 
+  {
     if ($_GET['status'] == "changesSaved") $results['statusMessage'] = "Your changes have been saved.";
     if ($_GET['status'] == "articleDeleted") $results['statusMessage'] = "Article deleted.";
   }
-
   require(TEMPLATE_PATH . "/admin/listArticles.php");
 }
-
 ?>
