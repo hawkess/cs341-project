@@ -36,7 +36,7 @@ class Article
 
   public static function getById($id) {
     $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-    $sql = "SELECT *, UNIX_TIMESTAMP(created) AS created FROM articles WHERE id = :id";
+    $sql = "SELECT *, TO_TIMESTAMP(created) AS created FROM articles WHERE id = :id";
     $st = $conn->prepare($sql);
     $st->bindValue(":id", $id, PDO::PARAM_INT);
     $st->execute();
@@ -47,7 +47,7 @@ class Article
 
   public static function getList($numRows=1000) {
     $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-    $sql = "SELECT *, extract(epoch FROM created) AS created FROM articles
+    $sql = "SELECT *, created AS created FROM articles
             ORDER BY created DESC LIMIT :numRows";
 
     $st = $conn->prepare($sql);
