@@ -19,13 +19,13 @@ INSERT INTO users (id, username, password)
 VALUES (DEFAULT, 'test', 'test');
 
 INSERT INTO articles (id, user_id, created, title, content)
-VALUES (DEFAULT, (SELECT id FROM users), now(), 'Test', 'This is a test');
+VALUES (DEFAULT, (SELECT id FROM users), CURRENT_TIMESTAMP, 'Test', 'This is a test');
 
 INSERT INTO articles (id, user_id, created, title, content)
-VALUES (DEFAULT, (SELECT id FROM users), now(), 'Test2', 'This is a test');
+VALUES (DEFAULT, (SELECT id FROM users), CURRENT_TIMESTAMP, 'Test2', 'This is a test');
 
 INSERT INTO articles (id, user_id, created, title, content)
-VALUES (DEFAULT, (SELECT id FROM users), now(), 'Test3', 'This is a test');
+VALUES (DEFAULT, (SELECT id FROM users), CURRENT_TIMESTAMP, 'Test3', 'This is a test');
 
 INSERT INTO articles (id, user_id, created, title, content)
-VALUES (DEFAULT, (SELECT id FROM users), now(), 'Test4', 'This is a test');
+VALUES (DEFAULT, (SELECT id FROM users), CURRENT_TIMESTAMP, 'Test4', 'This is a test');
