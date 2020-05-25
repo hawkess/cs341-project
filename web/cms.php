@@ -1,4 +1,5 @@
 <?php
+
 $dbopts = parse_url(getenv('DATABASE_URL'));
 $dbparams = array(
                    'driver'   => 'pgsql',
@@ -8,12 +9,12 @@ $dbparams = array(
                    'port' => $dbopts["port"],
                    'dbname' => ltrim($dbopts["path"],'/')
               );
+error_reporting(E_ALL);
 ini_set("display_errors", true);
 date_default_timezone_set("America/Phoenix");
 define("DB_DSN", $dbparams['driver'] . ":host=" . $dbparams['host'] . ";dbname=". $dbparams['dbname']);
 define("DB_USERNAME", $dbparams['user']);
 define("DB_PASSWORD", $dbparams['password']);
-define("TEMPLATE_PATH", "");
 define("HOMEPAGE_NUM_ARTICLES", 5);
 require("../objects/article.php");
 
