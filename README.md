@@ -1,1 +1,1 @@
-CS 313 PHP Base Code
+CS 341 CMS
