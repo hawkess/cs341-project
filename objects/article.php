@@ -3,12 +3,10 @@ require_once("cms.php");
 
 class Article
 {
-
   public $id = null;
   public $created = null;
   public $title = null;
   public $content = null;
-
 
   public function __construct($data = array()) {
     if (isset($data['id']))
@@ -57,12 +55,13 @@ class Article
     $st->execute();
     $list = array();
 
-    while ($row = $st->fetch()) {
+    while ($row = $st->fetch()) 
+    {
       $article = new Article($row);
       $list[] = $article;
     }
 
-    $sql = "SELECT COUNT(*) AS totalRows";
+    $sql = "SELECT COUNT(*) AS totalRows FROM articles";
     $totalRows = $conn->query($sql)->fetch();
     $conn = null;
     return (array ("results" => $list, "totalRows" => $totalRows[0]));
@@ -73,7 +72,7 @@ class Article
         trigger_error ("Article::insert(): Attempt to insert an Article object that already has its ID property set (to $this->id).", E_USER_ERROR);
 
     $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-    $sql = "INSERT INTO articles (created, title, slug, content) VALUES (FROM_UNIXTIME(:created), :title, :content)";
+    $sql = "INSERT INTO articles (created, title, content) VALUES (FROM_UNIXTIME(:created), :title, :content)";
     $st = $conn->prepare ($sql);
     $st->bindValue(":created", $this->created, PDO::PARAM_INT);
     $st->bindValue(":title", $this->title, PDO::PARAM_STR);

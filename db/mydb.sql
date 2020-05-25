@@ -14,3 +14,18 @@ CREATE TABLE articles (
     title VARCHAR(255) NOT NULL,
     content TEXT
 );
+
+INSERT INTO users (id, username, password)
+VALUES (DEFAULT, 'test', 'test');
+
+INSERT INTO articles (id, user_id, created, title, content)
+VALUES (DEFAULT, (SELECT id FROM users), CURRENT_DATE, 'Test', 'This is a test');
+
+INSERT INTO articles (id, user_id, created, title, content)
+VALUES (DEFAULT, (SELECT id FROM users), CURRENT_DATE, 'Test2', 'This is a test');
+
+INSERT INTO articles (id, user_id, created, title, content)
+VALUES (DEFAULT, (SELECT id FROM users), CURRENT_DATE, 'Test3', 'This is a test');
+
+INSERT INTO articles (id, user_id, created, title, content)
+VALUES (DEFAULT, (SELECT id FROM users), CURRENT_DATE, 'Test4', 'This is a test');
