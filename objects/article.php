@@ -20,16 +20,13 @@ class Article
   }
 
   public function storeFormValues ($params) {
-
     $this->__construct($params);
-
-    // Parse and store the publication date
     if (isset($params['created'])) {
       $created = explode ('-', $params['created']);
 
       if (count($created) == 3) {
         list ($y, $m, $d) = $created;
-        $this->created = mktime (0, 0, 0, $m, $d, $y);
+        $this->created = mktime(0, 0, 0, $m, $d, $y);
       }
     }
   }
@@ -47,7 +44,7 @@ class Article
 
   public static function getList($numRows=1000) {
     $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-    $sql = "SELECT *, extract(epoch FROM created) AS created FROM articles
+    $sql = "SELECT *, extract(EPOCH FROM created) AS created FROM articles
             ORDER BY created DESC LIMIT :numRows";
 
     $st = $conn->prepare($sql);
