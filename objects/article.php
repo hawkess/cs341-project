@@ -45,7 +45,7 @@ class Article
     if ($row) return new Article($row);
   }
 
-  public static function getList() {
+  public static function getList($numrows=1000) {
     $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
     $sql = "SELECT *, extract(epoch FROM created) AS created FROM articles
             ORDER BY created DESC";
@@ -72,7 +72,7 @@ class Article
         trigger_error ("Article::insert(): Attempt to insert an Article object that already has its ID property set (to $this->id).", E_USER_ERROR);
 
     $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-    $sql = "INSERT INTO articles (created, title, content) VALUES (FROM_UNIXTIME(:created), :title, :content)";
+    $sql = "INSERT INTO articles (created, title, content) VALUES (TO_TIMESTAMP(:created), :title, :content)";
     $st = $conn->prepare ($sql);
     $st->bindValue(":created", $this->created, PDO::PARAM_INT);
     $st->bindValue(":title", $this->title, PDO::PARAM_STR);
@@ -86,7 +86,7 @@ class Article
     if (is_null($this->id)) trigger_error ("Article::update(): Attempt to update an Article object that does not have its ID property set.", E_USER_ERROR);
    
     $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-    $sql = "UPDATE articles SET created=FROM_UNIXTIME(:created), title=:title, content=:content WHERE id = :id";
+    $sql = "UPDATE articles SET created=TO_TIMESTAMP(:created), title=:title, content=:content WHERE id = :id";
     $st = $conn->prepare ($sql);
     $st->bindValue(":created", $this->created, PDO::PARAM_INT);
     $st->bindValue(":title", $this->title, PDO::PARAM_STR);
