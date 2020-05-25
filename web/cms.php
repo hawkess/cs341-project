@@ -2,7 +2,6 @@
 ini_set("log_errors", true);
 error_reporting(E_ALL);
 ini_set("display_errors", true);
-trigger_error("This is a test");
 
 $dbopts = parse_url(getenv('DATABASE_URL'));
 $dbparams = array(

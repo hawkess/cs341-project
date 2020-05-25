@@ -36,7 +36,7 @@ function viewArticle() {
 
 function homepage() {
   $results = array();
-  $data = Article::getList(10);
+  $data = Article::getList(HOMEPAGE_NUM_ARTICLES);
   $results['articles'] = $data['results'];
   $results['totalRows'] = $data['totalRows'];
   $results['pageTitle'] = "CSE 341 CMS";
