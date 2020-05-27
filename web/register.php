@@ -19,10 +19,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
         $username_err = "Please enter a username.";
     } 
     else 
-    {
+    {        
         $sql = "SELECT id FROM users WHERE username = :username";
         
-        if($stmt = $pdo->prepare($sql))
+        
+        if($stmt = $conn->prepare($sql))
         {
             $stmt->bindParam(":username", $param_username, PDO::PARAM_STR);            
             $param_username = trim($_POST["username"]);
@@ -44,6 +45,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
             }
             unset($stmt);
         }
+        unset($conn);
     }
     
     if(empty(trim($_POST["password"])))
@@ -76,7 +78,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
     {        
         $sql = "INSERT INTO users (username, password) VALUES (:username, :password)";
          
-        if($stmt = $pdo->prepare($sql))
+        if($stmt = $conn->prepare($sql))
         {
             $stmt->bindParam(":username", $param_username, PDO::PARAM_STR);
             $stmt->bindParam(":password", $param_password, PDO::PARAM_STR);
@@ -95,7 +97,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
             unset($stmt);
         }
     }    
-    unset($pdo);
+    unset($conn);
 }
 ?>
 <?php include "include/header.php" ?>

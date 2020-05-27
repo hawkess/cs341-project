@@ -29,6 +29,7 @@ class Article
         $this->created = mktime(0, 0, 0, $m, $d, $y);
       }
     }
+      $this->user_id = $_SESSION["user_id"];
   }
 
   public static function getById($id) {
@@ -41,6 +42,25 @@ class Article
     $conn = null;
     if ($row) return new Article($row);
   }
+    
+    public static function getByUser() {
+      if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) 
+      {  
+        $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
+        $sql = "SELECT *, extract(EPOCH FROM date_created) AS created FROM articles WHERE user_id = :user_id";
+        $st = $conn->prepare($sql);
+        $st->bindValue(":user_id", $_SESSION["user_id"], PDO::PARAM_INT);
+        $st->execute();
+        $row = $st->fetch();
+        $conn = null;
+        if ($row) return new Article($row);
+      }
+        else
+        {
+            header("location: admin.php?action=login");
+            return;
+        }
+    }
 
   public static function getList($numRows=1000) {
     $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
@@ -65,18 +85,27 @@ class Article
   }
 
   public function insert() {
-    if (!is_null($this->id)) 
-        trigger_error ("Article::insert(): Attempt to insert an Article object that already has its ID property set (to $this->id).", E_USER_ERROR);
+      if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) 
+      {      
+        if (!is_null($this->id)) 
+            trigger_error ("Article::insert(): Attempt to insert an Article object that already has its ID property set (to $this->id).", E_USER_ERROR);
 
-    $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-    $sql = "INSERT INTO articles (date_created, title, content) VALUES (TO_TIMESTAMP(:created), :title, :content)";
-    $st = $conn->prepare ($sql);
-    $st->bindValue(":created", $this->created, PDO::PARAM_INT);
-    $st->bindValue(":title", $this->title, PDO::PARAM_STR);
-    $st->bindValue(":content", $this->content, PDO::PARAM_STR);
-    $st->execute();
-    $this->id = $conn->lastInsertId();
-    $conn = null;
+        $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
+        $sql = "INSERT INTO articles (user_id, date_created, title, content) VALUES (:user_id, TO_TIMESTAMP(:created), :title, :content)";
+        $st = $conn->prepare ($sql);
+        $st->bindValue(":user_id", $_SESSION["user_id"], PDO::PARAM_INT);
+        $st->bindValue(":created", $this->created, PDO::PARAM_INT);
+        $st->bindValue(":title", $this->title, PDO::PARAM_STR);
+        $st->bindValue(":content", $this->content, PDO::PARAM_STR);
+        $st->execute();
+        $this->id = $conn->lastInsertId();
+        $conn = null;
+      }
+        else
+        {
+            header("location: admin.php?action=login");
+            return;
+        }
   }
 
   public function update() {
@@ -94,13 +123,23 @@ class Article
   }
 
   public function delete() {
-    if (is_null($this->id)) trigger_error ("Article::delete(): Attempt to delete an Article object that does not have its ID property set.", E_USER_ERROR);
+    if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) 
+    {  
+        if (is_null($this->id)) trigger_error ("Article::delete(): Attempt to delete an Article object that does not have its ID property set.", E_USER_ERROR);
+        if (is_null($this->id)) trigger_error ("Article::delete(): Attempt to delete an Article object that does not have its ID property set.", E_USER_ERROR);
 
-    $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-    $st = $conn->prepare ("DELETE FROM articles WHERE id = :id LIMIT 1");
-    $st->bindValue(":id", $this->id, PDO::PARAM_INT);
-    $st->execute();
-    $conn = null;
-  }
+        $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
+        $st = $conn->prepare ("DELETE FROM articles WHERE id = :id && user_id = :user_id LIMIT 1");
+        $st->bindValue(":id", $this->id, PDO::PARAM_INT);
+        $st->bindValue(":user_id", $_SESSION["user_id"], PDO::PARAM_INT);
+        $st->execute();
+        $conn = null;
+        }
+    }
+    else
+    {
+        header("location: admin.php?action=login");
+        return;
+    }
 }
 ?>

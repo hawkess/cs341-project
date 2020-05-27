@@ -35,9 +35,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     }    
     if(empty($username_err) && empty($password_err))
     {
+        $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
         $sql = "SELECT id, username, password FROM users WHERE username = :username";
         
-        if($stmt = $pdo->prepare($sql))
+        if($stmt = $conn->prepare($sql))
         {
             $stmt->bindParam(":username", $param_username, PDO::PARAM_STR);
             $param_username = trim($_POST["username"]);
@@ -56,7 +57,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                             if(session_status() === PHP_SESSION_NONE) session_start();
                             
                             $_SESSION["loggedin"] = true;
-                            $_SESSION["id"] = $id;
+                            $_SESSION["user_id"] = $id;
                             $_SESSION["username"] = $username;                            
                             header("location: welcome.php");
                         } 
@@ -78,7 +79,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             unset($stmt);
         }
     }    
-    unset($pdo);
+    unset($conn);
 }
 ?>
 <?php include "include/header.php" ?>

@@ -9,7 +9,7 @@
                 <h2>
                     <span class="created"><?php echo date('j F Y', $article->created)?></span><a href=".?action=viewArticle&amp;articleId=<?php echo $article->id?>"><?php echo htmlspecialchars($article->title)?></a>
                 </h2>
-                <p class="summary"><?php echo htmlspecialchars($article->summary)?></p>
+                <p class="summary"><?php echo htmlspecialchars(substr($article->content, 0, 100))?></p>
             </li>
             <?php } ?>
         </ul>

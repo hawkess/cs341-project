@@ -64,7 +64,7 @@ function logout() {
     $_SESSION = array();
     session_destroy();
     header("location: admin.php?action=login");
-    exit;
+    return;
 }
 
 function register() {
@@ -80,7 +80,6 @@ function resetPassword() {
 }
 
 function newArticle() {
-
     $results = array();
     $results['pageTitle'] = "New Article";
     $results['formAction'] = "newArticle";
@@ -101,7 +100,6 @@ function newArticle() {
         $results['article'] = new Article;
         require("/admin/editArticle.php");
     }
-
 }
 
 
@@ -137,35 +135,49 @@ function editArticle() {
 
 
 function deleteArticle() {
-
-  if (!$article = Article::getById((int)$_GET['articleId'])) 
-  {
-    header("Location: admin.php?error=articleNotFound");
-    return;
-  }
-
-  $article->delete();
-  header("Location: admin.php?status=articleDeleted");
+    if (!$article = Article::getById((int)$_GET['articleId'])) 
+    {
+        header("Location: admin.php?error=articleNotFound");
+        return;
+    }
+    
+    if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) 
+    {
+          $article->delete();
+          header("Location: admin.php?status=articleDeleted");
+    }
+    
 }
 
 
 function listArticles() {
-  $results = array();
-  $data = Article::getList();
-  $results['articles'] = $data['results'];
-  $results['totalRows'] = $data['totalRows'];
-  $results['pageTitle'] = "All Articles";
+    if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) 
+    {
+        if (!$article = Article::getById((int)$_GET['articleId'])) 
+        {
+            $results = array();
+            $data = Article::getByUser();
+            $results['articles'] = $data['results'];
+            $results['totalRows'] = $data['totalRows'];
+            $results['pageTitle'] = "My Articles";
 
-  if (isset($_GET['error'])) 
-  {
-    if ($_GET['error'] == "articleNotFound") $results['errorMessage'] = "Error: Article not found.";
-  }
+            if (isset($_GET['error'])) 
+            {
+                if ($_GET['error'] == "articleNotFound") $results['errorMessage'] = "Error: Article not found.";
+            }
 
-  if (isset($_GET['status'])) 
-  {
-    if ($_GET['status'] == "changesSaved") $results['statusMessage'] = "Your changes have been saved.";
-    if ($_GET['status'] == "articleDeleted") $results['statusMessage'] = "Article deleted.";
-  }
-  require(TEMPLATE_PATH . "/admin/listArticles.php");
+            if (isset($_GET['status'])) 
+            {
+                if ($_GET['status'] == "changesSaved") $results['statusMessage'] = "Your changes have been saved.";
+                if ($_GET['status'] == "articleDeleted") $results['statusMessage'] = "Article deleted.";
+            }
+            require(TEMPLATE_PATH . "/admin/listArticles.php");
+        }
+    }
+    else
+    {
+        header("location: admin.php?action=login");
+        return;
+    }
 }
 ?>
