@@ -134,7 +134,6 @@ class Article
             $st->bindValue(":user_id", $_SESSION["user_id"], PDO::PARAM_INT);
             $st->execute();
             $conn = null;
-            }
         }
         else
         {
