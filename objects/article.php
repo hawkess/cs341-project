@@ -123,23 +123,24 @@ class Article
   }
 
   public function delete() {
-    if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) 
-    {  
-        if (is_null($this->id)) trigger_error ("Article::delete(): Attempt to delete an Article object that does not have its ID property set.", E_USER_ERROR);
-        if (is_null($this->id)) trigger_error ("Article::delete(): Attempt to delete an Article object that does not have its ID property set.", E_USER_ERROR);
+        if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) 
+        {  
+            if (is_null($this->id)) trigger_error ("Article::delete(): Attempt to delete an Article object that does not have its ID property set.", E_USER_ERROR);
+            if (is_null($this->id)) trigger_error ("Article::delete(): Attempt to delete an Article object that does not have its ID property set.", E_USER_ERROR);
 
-        $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-        $st = $conn->prepare ("DELETE FROM articles WHERE id = :id && user_id = :user_id LIMIT 1");
-        $st->bindValue(":id", $this->id, PDO::PARAM_INT);
-        $st->bindValue(":user_id", $_SESSION["user_id"], PDO::PARAM_INT);
-        $st->execute();
-        $conn = null;
+            $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
+            $st = $conn->prepare ("DELETE FROM articles WHERE id = :id && user_id = :user_id LIMIT 1");
+            $st->bindValue(":id", $this->id, PDO::PARAM_INT);
+            $st->bindValue(":user_id", $_SESSION["user_id"], PDO::PARAM_INT);
+            $st->execute();
+            $conn = null;
+            }
         }
-    }
-    else
-    {
-        header("location: admin.php?action=login");
-        return;
+        else
+        {
+            header("location: admin.php?action=login");
+            return;
+        }
     }
 }
 ?>
