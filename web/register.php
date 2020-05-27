@@ -19,9 +19,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
         $username_err = "Please enter a username.";
     } 
     else 
-    {        
-        $sql = "SELECT id FROM users WHERE username = :username";
-        
+    {   
+        $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
+        $sql = "SELECT id FROM users WHERE username = :username";     
         
         if($stmt = $conn->prepare($sql))
         {
@@ -76,6 +76,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
     
     if(empty($username_err) && empty($password_err) && empty($confirm_password_err))
     {        
+        $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
         $sql = "INSERT INTO users (username, password) VALUES (:username, :password)";
          
         if($stmt = $conn->prepare($sql))
@@ -96,8 +97,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
             }
             unset($stmt);
         }
-    }    
-    unset($conn);
+        unset($conn);
+    } 
 }
 ?>
 <?php include "include/header.php" ?>
