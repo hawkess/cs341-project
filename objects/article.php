@@ -43,13 +43,13 @@ class Article
     if ($row) return new Article($row);
   }
     
-    public static function getByUser() {
+    public static function getByUser($user_id) {
       if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) 
       {  
         $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
         $sql = "SELECT *, extract(EPOCH FROM date_created) AS created FROM articles WHERE user_id = :user_id";
         $st = $conn->prepare($sql);
-        $st->bindValue(":user_id", $_SESSION["user_id"], PDO::PARAM_INT);
+        $st->bindValue(":user_id", $user_id, PDO::PARAM_INT);
         $st->execute();
         $row = $st->fetch();
         $conn = null;

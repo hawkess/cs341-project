@@ -3,6 +3,7 @@ require_once("cms.php");
 if(session_status() === PHP_SESSION_NONE) session_start();
 $action = isset($_GET['action']) ? $_GET['action'] : "";
 $username = isset($_SESSION['username']) ? $_SESSION['username'] : "";
+$username = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : "";
 
 if ($action != "login" && $action != "logout" && !$username) 
 {
@@ -36,27 +37,9 @@ switch ($action)
 
 
 function login() {
-  $results = array();
-  $results['pageTitle'] = "CSE 341 CMS Login";
-
-  if (isset($_POST['login'])) 
-  {
-    if ($_POST['username'] == ADMIN_USERNAME && $_POST['password'] == ADMIN_PASSWORD) 
-    {
-      $_SESSION['username'] = ADMIN_USERNAME;
-      $_SESSION['loggedin'] = true;
-      header("Location: welcome.php");
-    } 
-      else 
-      {
-          $results['errorMessage'] = "Incorrect username or password. Please try again.";
-          require("login.php");
-      }
-  } 
-    else 
-    {
-        require("login.php");
-    }
+    $results = array();
+    $results['pageTitle'] = "CSE 341 CMS Login";
+    require("login.php");
 }
 
 
@@ -80,57 +63,71 @@ function resetPassword() {
 }
 
 function newArticle() {
-    $results = array();
-    $results['pageTitle'] = "New Article";
-    $results['formAction'] = "newArticle";
+    if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) 
+    {
+        $results = array();
+        $results['pageTitle'] = "New Article";
+        $results['formAction'] = "newArticle";
 
-    if (isset($_POST['saveChanges'])) 
-    {
-        $article = new Article;
-        $article->storeFormValues($_POST);
-        $article->insert();
-        header("Location: admin.php?status=changesSaved");
-    } 
-    elseif (isset($_POST['cancel'])) 
-    {
-        header("Location: admin.php");
+        if (isset($_POST['saveChanges'])) 
+        {
+            $article = new Article;
+            $article->storeFormValues($_POST);
+            $article->insert();
+            header("Location: admin.php?status=changesSaved");
+        } 
+        elseif (isset($_POST['cancel'])) 
+        {
+            header("Location: admin.php");
+        }
+        else 
+        {
+            $results['article'] = new Article;
+            require("/admin/editArticle.php");
+        }
     }
-    else 
+    else
     {
-        $results['article'] = new Article;
-        require("/admin/editArticle.php");
+        header("location: admin.php?action=login");
+        return;
     }
 }
 
 
 function editArticle() {
-
   $results = array();
   $results['pageTitle'] = "Edit Article";
   $results['formAction'] = "editArticle";
-
-    if (isset($_POST['saveChanges'])) 
+    
+    if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) 
     {
-        if (!$article = Article::getById((int)$_POST['articleId'])) 
+        if (isset($_POST['saveChanges'])) 
         {
-          header("Location: admin.php?error=articleNotFound");
-          return;
-        }
-        
-        $article->storeFormValues($_POST);
-        $article->update();
-        header("Location: admin.php?status=changesSaved");
-    } 
-    elseif (isset($_POST['cancel'])) 
-    {
-        header("Location: admin.php");
-    } 
-    else 
-    {
-        $results['article'] = Article::getById((int)$_GET['articleId']);
-        require("/admin/editArticle.php");
-    }
+            if (!$article = Article::getById((int)$_POST['articleId'])) 
+            {
+              header("Location: admin.php?error=articleNotFound");
+              return;
+            }
 
+            $article->storeFormValues($_POST);
+            $article->update();
+            header("Location: admin.php?status=changesSaved");
+        } 
+        elseif (isset($_POST['cancel'])) 
+        {
+            header("Location: admin.php");
+        } 
+        else 
+        {
+            $results['article'] = Article::getById((int)$_GET['articleId']);
+            require("/admin/editArticle.php");
+        }
+    }
+    else
+    {
+        header("location: admin.php?action=login");
+        return;
+    }
 }
 
 
@@ -146,14 +143,18 @@ function deleteArticle() {
           $article->delete();
           header("Location: admin.php?status=articleDeleted");
     }
-    
+    else
+    {
+        header("location: admin.php?action=login");
+        return;
+    }
 }
 
 
 function listArticles() {
     if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) 
     {
-        if (!$article = Article::getById((int)$_GET['articleId'])) 
+        if (!$article = Article::getByUser($_SESSION["user_id"]) 
         {
             $results = array();
             $data = Article::getByUser();
@@ -171,7 +172,7 @@ function listArticles() {
                 if ($_GET['status'] == "changesSaved") $results['statusMessage'] = "Your changes have been saved.";
                 if ($_GET['status'] == "articleDeleted") $results['statusMessage'] = "Article deleted.";
             }
-            require(TEMPLATE_PATH . "/admin/listArticles.php");
+            require("admin/listArticles.php");
         }
     }
     else
