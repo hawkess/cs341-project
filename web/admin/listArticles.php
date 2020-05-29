@@ -12,9 +12,11 @@
     <?php foreach ($results['articles'] as $article) { ?>
     <li>
         <h2>
-            <span class="created"><?php echo date('j F', $article->created)?></span><a href="index.php?action=viewArticle&amp;articleId=<?php echo $article->id?>"><?php echo htmlspecialchars($article->title)?></a>
+            <a href="index.php?action=viewArticle&amp;articleId=<?php echo $article->id?>"><?php echo htmlspecialchars($article->title)?></a>
         </h2>
-        <p class="summary"><?php echo htmlspecialchars(substr($article->content, 0, 100))?></p>
+        <p id="created"><?php echo date('j F', $article->created)?></p>
+        <p id="author"><?php echo $article->author?></p>
+        <p id="summary"><?php echo htmlspecialchars(substr($article->content, 0, 100))?></p>
     </li>
     <?php } ?>
     <a href="admin.php?action=newArticle" class="btn btn-success">Create New Article</a>

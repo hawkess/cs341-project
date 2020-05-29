@@ -4,8 +4,8 @@
    <?php include "include/navbar.php" ?>
     <div class="container-fluid">
         <h1 class="w-75"><?php echo htmlspecialchars($results['article']->title)?></h1>
-        <p class="author">Written by <?php echo $results['article']->author</p>
-        <p class="created">Published on <?php echo date('j F Y', $results['article']->created)?></p>
+        <p id="author">Written by <?php echo $results['article']->author</p>
+        <p id="created">Published on <?php echo date('j F Y', $results['article']->created)?></p>
         <div class="w-75"><?php echo $results['article']->content?></div>
         <?php 
         if($results['article']->user_id == $_SESSION["user_id"])
