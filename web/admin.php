@@ -155,7 +155,7 @@ function listArticles() {
     if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) 
     {
             $results = array();
-            $data = Article::getByUser($user_id);
+            $data = Article::getByUser($_SESSION['user_id']);
             $results['articles'] = $data['results'];
             $results['totalRows'] = $data['totalRows'];
             $results['pageTitle'] = "My Articles";

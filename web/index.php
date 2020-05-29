@@ -3,14 +3,17 @@ require("cms.php");
 $action = isset($_GET['action']) ? $_GET['action'] : "";
 
 switch ($action) {
-  case 'archive':
-    archive();
-    break;
-  case 'viewArticle':
-    viewArticle();
-    break;
-  default:
-    homepage();
+    case 'archive':
+        archive();
+        break;
+    case 'viewArticle':
+        viewArticle();
+        break;
+    case 'welcome':
+        welcome();
+        break;
+    default:
+        homepage();
 }
 
 function archive() {
@@ -41,5 +44,11 @@ function homepage() {
   $results['totalRows'] = $data['totalRows'];
   $results['pageTitle'] = "CSE 341 CMS";
   require("homepage.php");
+}
+
+function welcome() {
+    $results = array();
+    $results['pageTitle'] = "CSE 341 Welcome";
+    require("welcome.php");
 }
 ?>
