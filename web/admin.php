@@ -154,7 +154,7 @@ function deleteArticle() {
 function listArticles() {
     if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) 
     {
-        if (!$article = Article::getByUser($_SESSION["user_id"]) 
+        if (!$article = Article::getByUser($_SESSION["user_id"])) 
         {
             $results = array();
             $data = Article::getByUser();
