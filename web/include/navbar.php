@@ -13,7 +13,7 @@
         if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true)
         {
             echo '<a class="nav-item nav-link" href="index.php?action=welcome">My Profile</a>';
-            echo '<a class="nav-item nav-link" href="admin.php?action=logout>Logout</a>';
+            echo '<a class="nav-item nav-link" href="admin.php?action=logout">Logout</a>';
         }
         else
         {

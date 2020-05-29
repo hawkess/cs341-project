@@ -17,5 +17,6 @@
         <p class="summary"><?php echo htmlspecialchars(substr($article->content, 0, 100))?></p>
     </li>
     <?php } ?>
+    <a href="admin.php?action=newArticle" class="btn btn-success">Create New Article</a>
 </body>
 </html>
