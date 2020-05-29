@@ -1,4 +1,5 @@
 <?php include "include/header.php" ?>
+<?php if(session_status() === PHP_SESSION_NONE) session_start(); ?>
 <body>
    <?php include "include/navbar.php" ?>
     <div class="container-fluid">
