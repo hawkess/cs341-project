@@ -1,9 +1,8 @@
-<?php include "../include/header.php" ?>
+<?php include "include/header.php" ?>
      <body>
-     <?php include "../include/navbar.php" ?>
+     <?php include "include/navbar.php" ?>
       <div id="adminHeader">
         <h2>CSE 341 CMS </h2>
-        <p>You are logged in as <b><?php echo htmlspecialchars( $_SESSION['username']) ?></b>. <a href="admin.php?action=logout"?>Log out</a></p>
       </div>
       <h1>All Articles</h1>
 <?php if (isset($results['errorMessage'])){ ?>

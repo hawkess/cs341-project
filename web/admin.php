@@ -154,8 +154,6 @@ function deleteArticle() {
 function listArticles() {
     if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) 
     {
-        if (!$article = Article::getByUser($_SESSION["user_id"])) 
-        {
             $results = array();
             $data = Article::getByUser($_SESSION["user_id"]);
             $results['articles'] = $data['results'];
@@ -173,7 +171,6 @@ function listArticles() {
                 if ($_GET['status'] == "articleDeleted") $results['statusMessage'] = "Article deleted.";
             }
             require("admin/listArticles.php");
-        }
     }
     else
     {

@@ -44,8 +44,6 @@ class Article
   }
     
     public static function getByUser($user_id) {
-      if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) 
-      {  
         $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
         $sql = "SELECT *, extract(EPOCH FROM date_created) AS created FROM articles WHERE user_id = :user_id";
         $st = $conn->prepare($sql);
@@ -54,12 +52,6 @@ class Article
         $row = $st->fetch();
         $conn = null;
         if ($row) return new Article($row);
-      }
-        else
-        {
-            header("location: admin.php?action=login");
-            return;
-        }
     }
 
   public static function getList($numRows=1000) {
