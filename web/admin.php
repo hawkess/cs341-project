@@ -83,7 +83,7 @@ function newArticle() {
         else 
         {
             $results['article'] = new Article;
-            require("/admin/editArticle.php");
+            require("admin/editArticle.php");
         }
     }
     else
@@ -120,7 +120,7 @@ function editArticle() {
         else 
         {
             $results['article'] = Article::getById((int)$_GET['articleId']);
-            require("/admin/editArticle.php");
+            require("admin/editArticle.php");
         }
     }
     else
@@ -156,8 +156,8 @@ function listArticles() {
     {
             $results = array();
             $data = Article::getByUser($_SESSION['user_id']);
-            $results['articles'] = $data['results'];
-            $results['totalRows'] = $data['totalRows'];
+            $results['articles'] = if(isset($data)) ? $data['results'] : "";
+            $results['totalRows'] = if(isset($data)) ? $data['totalRows'] : 0;
             $results['pageTitle'] = "My Articles";
 
             if (isset($_GET['error'])) 
