@@ -11,14 +11,14 @@
       <a class="nav-item nav-link" href="index.php?action=archive">Archive</a>
       <?php 
         if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true)
-            {
-                echo '<a class="nav-item nav-link" href="welcome.php">My Profile</a>';
-                echo '<a class="nav-item nav-link" href="admin.php?action=logout>Logout</a>'
-            }
-            else
-            {
-                echo '<a class="nav-item nav-link" href="admin.php?action=login">Login</a>';
-            } ?>
+        {
+            echo '<a class="nav-item nav-link" href="welcome.php">My Profile</a>';
+            echo '<a class="nav-item nav-link" href="admin.php?action=logout>Logout</a>';
+        }
+        else
+        {
+            echo '<a class="nav-item nav-link" href="admin.php?action=login">Login</a>';
+        } ?>
     </div>
   </div>
 </nav>

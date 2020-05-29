@@ -15,9 +15,10 @@ $password = "";
 $username_err = "";
 $password_err = "";
  
-if($_SERVER["REQUEST_METHOD"] == "POST"){
- 
-    if(empty(trim($_POST["username"]))){
+if($_SERVER["REQUEST_METHOD"] == "POST")
+{ 
+    if(empty(trim($_POST["username"])))
+    {
         $username_err = "Please enter username.";
     } 
     else

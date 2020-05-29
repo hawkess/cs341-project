@@ -4,7 +4,7 @@
       <div id="adminHeader">
         <h2>CSE 341 CMS </h2>
       </div>
-      <h1>All Articles</h1>
+      <h1>My Articles</h1>
 <?php if (isset($results['errorMessage'])){ ?>
         <div class="errorMessage"><?php echo $results['errorMessage'] ?></div>
 <?php } ?>
