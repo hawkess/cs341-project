@@ -157,7 +157,7 @@ function listArticles() {
         if (!$article = Article::getByUser($_SESSION["user_id"])) 
         {
             $results = array();
-            $data = Article::getByUser();
+            $data = Article::getByUser($_SESSION["user_id"]);
             $results['articles'] = $data['results'];
             $results['totalRows'] = $data['totalRows'];
             $results['pageTitle'] = "My Articles";
