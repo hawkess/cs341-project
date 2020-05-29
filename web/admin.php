@@ -156,7 +156,7 @@ function listArticles() {
     {
             $results = array();
             $data = Article::getByUser($_SESSION['user_id']);
-            $results['articles'] = isset($data) ? $data['results'] : "";
+            $results['articles'] = isset($data) ? $data['results'] : array();
             $results['totalRows'] = isset($data) ? $data['totalRows'] : 0;
             $results['pageTitle'] = "My Articles";
 
