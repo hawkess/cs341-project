@@ -3,7 +3,7 @@ require_once("cms.php");
 if(session_status() === PHP_SESSION_NONE) session_start();
 $action = isset($_GET['action']) ? $_GET['action'] : "";
 $username = isset($_SESSION['username']) ? $_SESSION['username'] : "";
-$username = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : "";
+$user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : "";
 
 if ($action != "login" && $action != "logout" && !$username) 
 {
@@ -155,7 +155,7 @@ function listArticles() {
     if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) 
     {
             $results = array();
-            $data = Article::getByUser($_SESSION["user_id"]);
+            $data = Article::getByUser($user_id);
             $results['articles'] = $data['results'];
             $results['totalRows'] = $data['totalRows'];
             $results['pageTitle'] = "My Articles";
