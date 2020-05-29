@@ -49,10 +49,22 @@ class Article
         $st = $conn->prepare($sql);
         $st->bindValue(":user_id", $user_id, PDO::PARAM_INT);
         $st->execute();
-        $row = $st->fetch();
+        $list = array();
+
+        while ($row = $st->fetch()) 
+        {
+          $article = new Article($row);
+          $list[] = $article;
+        }
+
+        $sql = "SELECT COUNT(*) AS totalRows FROM articles WHERE user_id = :user_id";
+        $st = $conn->prepare($sql);
+        $st->bindValue(":user_id", $user_id, PDO::PARAM_INT);
+        $st->execute();
+        $totalRows = $st->fetch();
         $conn = null;
-        if ($row) return new Article($row);
-    }
+        return (array ("results" => $list, "totalRows" => $totalRows[0]));
+}
 
   public static function getList($numRows=1000) {
     $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
