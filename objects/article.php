@@ -40,7 +40,7 @@ class Article
 
   public static function getById($id) {
     $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-    $sql = "SELECT a.*, extract(EPOCH FROM a.date_created) AS created, u.username FROM articles a INNER JOIN users u ON a.user_id = u.id WHERE id = :id";
+    $sql = "SELECT a.*, extract(EPOCH FROM a.date_created) AS created, u.username FROM articles a INNER JOIN users u ON a.user_id = u.id WHERE a.id = :id";
     $st = $conn->prepare($sql);
     $st->bindValue(":id", $id, PDO::PARAM_INT);
     $st->execute();
