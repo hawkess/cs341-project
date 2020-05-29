@@ -19,8 +19,8 @@ switch ($action) {
 function archive() {
   $results = array();
   $data = Article::getList();
-  $results['articles'] = $data['results'];
-  $results['totalRows'] = $data['totalRows'];
+  $results['articles'] = isset($data) ? $data['results'] : array();
+  $results['totalRows'] = isset($data) ? $data['totalRows'] : 0;
   $results['pageTitle'] = "CSE 341 CMS Archive";
   require("archive.php");
 }

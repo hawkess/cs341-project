@@ -4,9 +4,11 @@ require_once("cms.php");
 class Article
 {
   public $id = null;
+    public $user_id = null;
   public $created = null;
   public $title = null;
   public $content = null;
+    public $author = null;
 
   public function __construct($data = array()) {
     if (isset($data['id']))
@@ -17,6 +19,10 @@ class Article
         $this->title = preg_replace ("/[^\.\,\-\_\'\"\@\?\!\:\$ a-zA-Z0-9()]/", "", $data['title']);
     if (isset($data['content']))
         $this->content = htmlspecialchars($data['content']);
+      if (isset($data['user_id']))
+          $this->user_id = (int) $data['user_id'];
+      if (isset($data['username']))
+          $this->author = htmlspecialchars($data['username']);
   }
 
   public function storeFormValues($params) {
@@ -34,7 +40,7 @@ class Article
 
   public static function getById($id) {
     $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-    $sql = "SELECT *, extract(EPOCH FROM date_created) AS created FROM articles WHERE id = :id";
+    $sql = "SELECT a.*, extract(EPOCH FROM a.date_created) AS created, u.username AS created FROM articles a INNER JOIN users u ON a.user_id = u.id WHERE id = :id";
     $st = $conn->prepare($sql);
     $st->bindValue(":id", $id, PDO::PARAM_INT);
     $st->execute();
@@ -45,7 +51,7 @@ class Article
     
     public static function getByUser($user_id) {
         $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-        $sql = "SELECT *, extract(EPOCH FROM date_created) AS created FROM articles WHERE user_id = :user_id";
+        $sql = "SELECT a.*, extract(EPOCH FROM a.date_created) AS created, u.username AS created FROM articles a INNER JOIN users u ON a.user_id = u.id WHERE user_id = :user_id";
         $st = $conn->prepare($sql);
         $st->bindValue(":user_id", $user_id, PDO::PARAM_INT);
         $st->execute();
@@ -68,7 +74,7 @@ class Article
 
   public static function getList($numRows=1000) {
     $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-    $sql = "SELECT *, extract(EPOCH FROM date_created) AS created FROM articles
+    $sql = "SELECT a.*, extract(EPOCH FROM a.date_created) AS created, u.username FROM articles a INNER JOIN users u ON a.user_id = u.id
             ORDER BY created DESC LIMIT :numRows";
 
     $st = $conn->prepare($sql);
@@ -116,7 +122,7 @@ class Article
     if (is_null($this->id)) trigger_error ("Article::update(): Attempt to update an Article object that does not have its ID property set.", E_USER_ERROR);
    
     $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-    $sql = "UPDATE articles SET date_created=TO_TIMESTAMP(:created), title=:title, content=:content WHERE id = :id";
+    $sql = "UPDATE articles SET date_created = TO_TIMESTAMP(:created), title = :title, content = :content WHERE id = :id";
     $st = $conn->prepare ($sql);
     $st->bindValue(":created", $this->created, PDO::PARAM_INT);
     $st->bindValue(":title", $this->title, PDO::PARAM_STR);
