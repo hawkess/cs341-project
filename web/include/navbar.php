@@ -7,11 +7,11 @@
   <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
     <div class="navbar-nav">
       <a class="nav-item nav-link" href="index.php">Home</a>
-      <a class="nav-item nav-link" href="admin.php">My Articles</a>
       <a class="nav-item nav-link" href="index.php?action=archive">Archive</a>
       <?php 
         if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true)
         {
+            echo '<a class="nav-item nav-link" href="admin.php">My Articles</a>';
             echo '<a class="nav-item nav-link" href="index.php?action=welcome">My Profile</a>';
             echo '<a class="nav-item nav-link" href="admin.php?action=logout">Logout</a>';
         }

@@ -13,26 +13,29 @@ if ($action != "login" && $action != "logout" && !$username)
 
 switch ($action) 
 {
-  case 'login':
-    login();
-    break;
-  case 'logout':
-    logout();
-    break;
-  case 'register':
-    register();
-    break;
-  case 'newArticle':
-    newArticle();
-    break;
-  case 'editArticle':
-    editArticle();
-    break;
-  case 'deleteArticle':
-    deleteArticle();
-    break;
-  default:
-    listArticles();
+    case 'login':
+        login();
+        break;
+    case 'logout':
+        logout();
+        break;
+    case 'register':
+        register();
+        break;
+    case 'resetpassword':
+        resetPassword();
+        break;
+    case 'newArticle':
+        newArticle();
+        break;
+    case 'editArticle':
+        editArticle();
+        break;
+    case 'deleteArticle':
+        deleteArticle();
+        break;
+    default:
+        listArticles();
 }
 
 
@@ -57,9 +60,17 @@ function register() {
 }
 
 function resetPassword() {
-    $results = array();
-    $results['pageTitle'] = "CSE 341 CMS Reset Password";
-    require("resetpassword.php");
+    if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) 
+    {
+        $results = array();
+        $results['pageTitle'] = "CSE 341 CMS Reset Password";
+        require("resetpassword.php");
+    }
+    else
+    {
+        header("location: admin.php?action=login");
+        return;
+    }
 }
 
 function newArticle() {
@@ -140,7 +151,7 @@ function deleteArticle() {
     
     if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) 
     {
-          $article->delete();
+          $article->delete($_SESSION["user_id"]);
           header("Location: admin.php?status=articleDeleted");
     }
     else
