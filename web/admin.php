@@ -64,7 +64,8 @@ function resetPassword() {
     {
         $results = array();
         $results['pageTitle'] = "CSE 341 CMS Reset Password";
-        require("resetpassword.php");
+        header("location: resetpassword.php");
+        return;
     }
     else
     {

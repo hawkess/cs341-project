@@ -4,6 +4,8 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     header("location: admin.php?action=login");
     exit;
 }
+
+$results['pageTitle'] = "CSE 341 Welcome Page";
 ?>
 <?php include "include/header.php" ?>
 <body>
