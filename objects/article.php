@@ -74,8 +74,7 @@ class Article
 
   public static function getList($numRows=1000) {
     $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-    $sql = "SELECT a.*, extract(EPOCH FROM a.date_created) AS created, u.username FROM articles a INNER JOIN users u ON a.user_id = u.id
-            ORDER BY created DESC LIMIT :numRows";
+    $sql = "SELECT a.*, extract(EPOCH FROM a.date_created) AS created, u.username FROM articles a INNER JOIN users u ON a.user_id = u.id ORDER BY created DESC LIMIT :numRows";
 
     $st = $conn->prepare($sql);
     $st->bindValue(":numRows", $numRows, PDO::PARAM_INT);
@@ -101,10 +100,10 @@ class Article
             trigger_error ("Article::insert(): Attempt to insert an Article object that already has its ID property set (to $this->id).", E_USER_ERROR);
 
         $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-        $sql = "INSERT INTO articles (user_id, date_created, title, content) VALUES (:user_id, :created, :title, :content)";
+        $sql = "INSERT INTO articles (user_id, date_created, title, content) VALUES (:user_id, TO_TIMESTAMP(:created), :title, :content)";
         $st = $conn->prepare ($sql);
         $st->bindValue(":user_id", $_SESSION["user_id"], PDO::PARAM_INT);
-        $st->bindValue(":created", $this->created, PDO::PARAM_STR);
+        $st->bindValue(":created", $this->created, PDO::PARAM_INT);
         $st->bindValue(":title", $this->title, PDO::PARAM_STR);
         $st->bindValue(":content", $this->content, PDO::PARAM_STR);
         $st->execute();
@@ -122,16 +121,14 @@ class Article
     if (is_null($this->id)) trigger_error ("Article::update(): Attempt to update an Article object that does not have its ID property set.", E_USER_ERROR);
    
     $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-    $sql = "UPDATE articles SET date_created = :created, title = :title, content = :content WHERE id = :id";
+    $sql = "UPDATE articles SET date_created = TO_TIMESTAMP(:created), title = :title, content = :content WHERE id = :id";
     $st = $conn->prepare ($sql);
-    $st->bindValue(":created", $this->created, PDO::PARAM_STR);
+    $st->bindValue(":created", $this->created, PDO::PARAM_INT);
     $st->bindValue(":title", $this->title, PDO::PARAM_STR);
     $st->bindValue(":content", $this->content, PDO::PARAM_STR);
     $st->bindValue(":id", $this->id, PDO::PARAM_INT);
     $st->execute();
     $conn = null;
-      
-      trigger_error ("Date looks like " . $this->created, E_USER_ERROR);
   }
 
   public function delete($loggedin_id) { 
@@ -141,10 +138,10 @@ class Article
         { 
 
             $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-            $st = $conn->prepare ("DELETE FROM articles WHERE id = :id && user_id = :user_id LIMIT 1");
+            $st = $conn->prepare ("DELETE FROM articles WHERE id = :id LIMIT 1");
             $st->bindValue(":id", $this->id, PDO::PARAM_INT);
-            $st->bindValue(":user_id", $_SESSION["user_id"], PDO::PARAM_INT);
             $st->execute();
+            echo 'Rows deleted ' . $conn->rowCount();
             $conn = null;
         }
         else
