@@ -141,7 +141,7 @@ class Article
             $st = $conn->prepare ("DELETE FROM articles WHERE id = :id LIMIT 1");
             $st->bindValue(":id", $this->id, PDO::PARAM_INT);
             $st->execute();
-            echo 'Rows deleted ' . $conn->rowCount();
+            trigger_error ("Rows deleted: " . $conn->rowCount(), E_USER_ERROR);
             $conn = null;
         }
         else
