@@ -27,15 +27,8 @@ class Article
 
   public function storeFormValues($params) {
     $this->__construct($params);
-    if (isset($params['created'])) {
-      $created = explode ('-', $params['created']);
-
-      if (count($created) == 3) {
-        list ($y, $m, $d) = $created;
-        $this->created = mktime(11, 59, 0, $m, $d, $y);
-      }
-    }
-      $this->user_id = $_SESSION["user_id"];
+    $this->created = time();
+    $this->user_id = $_SESSION["user_id"];
   }
 
   public static function getById($id) {
@@ -100,10 +93,9 @@ class Article
             trigger_error ("Article::insert(): Attempt to insert an Article object that already has its ID property set (to $this->id).", E_USER_ERROR);
 
         $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-        $sql = "INSERT INTO articles (user_id, date_created, title, content) VALUES (:user_id, TO_TIMESTAMP(:created), :title, :content)";
+        $sql = "INSERT INTO articles (user_id, title, content) VALUES (:user_id, :title, :content)";
         $st = $conn->prepare ($sql);
         $st->bindValue(":user_id", $_SESSION["user_id"], PDO::PARAM_INT);
-        $st->bindValue(":created", $this->created, PDO::PARAM_INT);
         $st->bindValue(":title", $this->title, PDO::PARAM_STR);
         $st->bindValue(":content", $this->content, PDO::PARAM_STR);
         $st->execute();
@@ -121,9 +113,9 @@ class Article
     if (is_null($this->id)) trigger_error ("Article::update(): Attempt to update an Article object that does not have its ID property set.", E_USER_ERROR);
    
     $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-    $sql = "UPDATE articles SET date_created = TO_TIMESTAMP(:created), title = :title, content = :content WHERE id = :id";
+    $sql = "UPDATE articles SET date_created = to_timestamp(:created), title = :title, content = :content WHERE id = :id";
     $st = $conn->prepare ($sql);
-    $st->bindValue(":created", $this->created, PDO::PARAM_INT);
+    $st->bindValue(":created", time(), PDO::PARAM_INT);
     $st->bindValue(":title", $this->title, PDO::PARAM_STR);
     $st->bindValue(":content", $this->content, PDO::PARAM_STR);
     $st->bindValue(":id", $this->id, PDO::PARAM_INT);
@@ -132,16 +124,14 @@ class Article
   }
 
   public function delete($loggedin_id) { 
-            if (is_null($this->id)) trigger_error ("Article::delete(): Attempt to delete an Article object that does not have its ID property set.", E_USER_ERROR);
-            if (is_null($this->id)) trigger_error ("Article::delete(): Attempt to delete an Article object that does not have its ID property set.", E_USER_ERROR);
+        if (is_null($this->id)) trigger_error ("Article::delete(): Attempt to delete an Article object that does not have its ID property set.", E_USER_ERROR);
+        if (is_null($this->id)) trigger_error ("Article::delete(): Attempt to delete an Article object that does not have its ID property set.", E_USER_ERROR);
         if($loggedin_id == $this->user_id) 
-        { 
-
+        {
             $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-            $st = $conn->prepare ("DELETE FROM articles WHERE id = :id LIMIT 1");
+            $st = $conn->prepare ("DELETE FROM articles WHERE id = :id");
             $st->bindValue(":id", $this->id, PDO::PARAM_INT);
             $st->execute();
-            trigger_error ("Rows deleted: " . $conn->rowCount(), E_USER_ERROR);
             $conn = null;
         }
         else

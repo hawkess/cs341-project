@@ -19,10 +19,6 @@
             <label for="content">Article Content</label>
             <textarea name="content" id="content" placeholder="The content of the article" required maxlength="100000" style="height: 30em;"><?php echo htmlspecialchars($results['article']->content)?></textarea>
           </li>
-          <li>
-            <label for="created">Publication Date</label>
-            <input type="date" name="created" id="created" placeholder="YYYY-MM-DD" required maxlength="10" value="<?php echo $results['article']->created ? date("Y-m-d", $results['article']->created) : "" ?>" />
-          </li>
         </ul>
         <div class="buttons">
           <input type="submit" name="saveChanges" value="Save Changes" />

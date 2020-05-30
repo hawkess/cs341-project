@@ -9,7 +9,7 @@ CREATE TABLE users (
 CREATE TABLE articles (
     id SERIAL NOT NULL PRIMARY KEY,
     user_id INT NOT NULL REFERENCES users(id),
-	date_created DATE NOT NULL,
+	date_created timestamp NOT NULL DEFAULT (now() AT TIME ZONE 'UTC'),
     title VARCHAR(255) NOT NULL,
     content TEXT
 );
