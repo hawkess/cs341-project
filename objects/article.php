@@ -132,11 +132,11 @@ class Article
     $conn = null;
   }
 
-  public function delete() {
-        if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) 
-        {  
+  public function delete($user_id) { 
             if (is_null($this->id)) trigger_error ("Article::delete(): Attempt to delete an Article object that does not have its ID property set.", E_USER_ERROR);
             if (is_null($this->id)) trigger_error ("Article::delete(): Attempt to delete an Article object that does not have its ID property set.", E_USER_ERROR);
+        if($user_id == $this->user_id) 
+        { 
 
             $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
             $st = $conn->prepare ("DELETE FROM articles WHERE id = :id && user_id = :user_id LIMIT 1");
