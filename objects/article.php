@@ -101,10 +101,10 @@ class Article
             trigger_error ("Article::insert(): Attempt to insert an Article object that already has its ID property set (to $this->id).", E_USER_ERROR);
 
         $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-        $sql = "INSERT INTO articles (user_id, date_created, title, content) VALUES (:user_id, TO_TIMESTAMP(:created), :title, :content)";
+        $sql = "INSERT INTO articles (user_id, date_created, title, content) VALUES (:user_id, :created, :title, :content)";
         $st = $conn->prepare ($sql);
         $st->bindValue(":user_id", $_SESSION["user_id"], PDO::PARAM_INT);
-        $st->bindValue(":created", $this->created, PDO::PARAM_INT);
+        $st->bindValue(":created", $this->created, PDO::PARAM_STR);
         $st->bindValue(":title", $this->title, PDO::PARAM_STR);
         $st->bindValue(":content", $this->content, PDO::PARAM_STR);
         $st->execute();
@@ -134,10 +134,10 @@ class Article
       trigger_error ("Date looks like " . $this->created, E_USER_ERROR);
   }
 
-  public function delete($user_id) { 
+  public function delete($loggedin_id) { 
             if (is_null($this->id)) trigger_error ("Article::delete(): Attempt to delete an Article object that does not have its ID property set.", E_USER_ERROR);
             if (is_null($this->id)) trigger_error ("Article::delete(): Attempt to delete an Article object that does not have its ID property set.", E_USER_ERROR);
-        if($user_id == $this->user_id) 
+        if($loggedin_id == $this->user_id) 
         { 
 
             $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
