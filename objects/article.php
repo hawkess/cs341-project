@@ -122,14 +122,16 @@ class Article
     if (is_null($this->id)) trigger_error ("Article::update(): Attempt to update an Article object that does not have its ID property set.", E_USER_ERROR);
    
     $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-    $sql = "UPDATE articles SET date_created = TO_TIMESTAMP(:created), title = :title, content = :content WHERE id = :id";
+    $sql = "UPDATE articles SET date_created = :created, title = :title, content = :content WHERE id = :id";
     $st = $conn->prepare ($sql);
-    $st->bindValue(":created", $this->created, PDO::PARAM_INT);
+    $st->bindValue(":created", $this->created, PDO::PARAM_STR);
     $st->bindValue(":title", $this->title, PDO::PARAM_STR);
     $st->bindValue(":content", $this->content, PDO::PARAM_STR);
     $st->bindValue(":id", $this->id, PDO::PARAM_INT);
     $st->execute();
     $conn = null;
+      
+      trigger_error ("Date looks like " . $this->created, E_USER_ERROR);
   }
 
   public function delete($user_id) { 

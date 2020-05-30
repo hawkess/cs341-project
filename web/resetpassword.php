@@ -42,8 +42,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     if(empty($new_password_err) && empty($confirm_password_err))
     {
         $param_password = password_hash($new_password, PASSWORD_DEFAULT);
+        $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
         $sql = "UPDATE users SET password = :password WHERE id = :id";
-        if($stmt = $pdo->prepare($sql)){
+        if($stmt = $conn->prepare($sql)){
             $stmt->bindParam(":password", $param_password, PDO::PARAM_STR);
             $stmt->bindParam(":id", $_SESSION["user_id"], PDO::PARAM_INT);
             
@@ -60,7 +61,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             unset($stmt);
         }
     }
-    unset($pdo);
+    unset($conn);
 }
 ?> 
 <?php include "include/header.php" ?>
