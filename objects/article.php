@@ -32,7 +32,7 @@ class Article
 
       if (count($created) == 3) {
         list ($y, $m, $d) = $created;
-        $this->created = mktime(0, 0, 0, $m, $d, $y);
+        $this->created = mktime(11, 59, 0, $m, $d, $y);
       }
     }
       $this->user_id = $_SESSION["user_id"];
