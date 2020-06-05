@@ -1,19 +1,20 @@
 <?php include "include/header.php" ?>
+
 <body>
-   <?php include "include/navbar.php" ?>
+    <?php include "include/navbar.php" ?>
     <div class="container-fluid">
-        <ul id="headlines">
+        <div class="list-group">
             <?php foreach ($results['articles'] as $article) { ?>
-            <li>
-                <h2>
-                    <a href="index.php?action=viewArticle&amp;articleId=<?php echo $article->id?>"><?php echo htmlspecialchars($article->title)?></a>
-                </h2>
-                <p id="created"><?php echo date('j F', $article->created)?></p>
-                <p id="author">Written by <?php echo $article->author?></p>
-                <p id="summary"><?php echo htmlspecialchars(substr($article->content, 0, 100))?></p>
-            </li>
+            <a href="index.php?action=viewArticle&amp;articleId=<?php echo $article->id?>" class="list-group-item list-group-item-action flex-column align-items-start">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1"><?php echo htmlspecialchars($article->title)?></h5>
+                    <small><?php echo date('F j\, Y', $article->created)?></small>
+                </div>
+                <p class="mb-1"><?php echo htmlspecialchars(substr($article->content, 0, 100))?></p>
+                <small><?php echo $article->author?></small>
+            </a>
             <?php } ?>
-        </ul>
+        </div>
     </div>
 </body>
 </html>
