@@ -5,7 +5,7 @@
         event.preventDefault();
         console.log("This worked.");
         $('#deleteModal').modal('hide');
-        $.post("admin.php?deleteArticle", {
+        $.post("admin.php?action=deleteArticle", {
             articleId: "<?php echo $results['article']->id ?>"
         });        
     });
