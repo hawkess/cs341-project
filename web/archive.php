@@ -7,9 +7,8 @@
             <?php if (isset($results['errorMessage'])){ ?>
             <div class="errorMessage"><?php echo $results['errorMessage']?></div>
             <?php } ?>
-            <h3>Archives</h3>
             <div class="list-group">
-                <h3 class="pb-4">My Articles</h3>
+                <h3 class="pb-4">Archives</h3>
                 <?php foreach ($results['articles'] as $article) { ?>
                 <a href="index.php?action=viewArticle&amp;articleId=<?php echo $article->id?>" class="list-group-item list-group-item-action flex-column align-items-start">
                     <div class="d-flex w-100 justify-content-between">
@@ -20,7 +19,6 @@
                     <small>Submitted by <?php echo $article->author?></small>
                 </a>
                 <?php } ?>
-                <a href="admin.php?action=newArticle" class="btn btn-outline-dark mt-3"><i class="fas fa-plus px-1"></i>Create New Article</a>
             </div>
             <p><?php echo $results['totalRows']?> article<?php echo ($results['totalRows'] != 1) ? 's' : '' ?> in total.</p>
         </div>
