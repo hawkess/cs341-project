@@ -10,12 +10,16 @@ $results['pageTitle'] = "CSE 341 Welcome Page";
 <?php include "include/header.php" ?>
 <body>
    <?php include "include/navbar.php" ?>
+   <div class="container-fluid">
+   <div class="w-25 m-auto py-5">
     <div class="page-header">
-        <h1>Hello, <b><?php echo htmlspecialchars($_SESSION["username"]); ?></b>.</h1>
+        <h2>Hello, <b><?php echo htmlspecialchars($_SESSION["username"]); ?></b>.</h1>
     </div>
     <p>
         <a href="admin.php?action=resetpassword" class="btn btn-warning">Reset Your Password</a>
         <a href="admin.php?action=logout" class="btn btn-danger">Sign Out of Your Account</a>
     </p>
+    </div>
+    </div>
 </body>
 </html>
