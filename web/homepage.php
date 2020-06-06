@@ -5,7 +5,7 @@
     <div class="container-fluid d-flex justify-content-center">
     <div class="w-25 m-auto py-5">
         <div class="list-group">
-        <h3>Latest Articles</h3>
+        <h3 class="pb-2">Latest Articles</h3>
             <?php foreach ($results['articles'] as $article) { ?>
             <a href="index.php?action=viewArticle&amp;articleId=<?php echo $article->id?>" class="list-group-item list-group-item-action flex-column align-items-start">
                 <div class="d-flex w-100 justify-content-between">
