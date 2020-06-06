@@ -17,8 +17,8 @@ $results['pageTitle'] = "CSE 341 Welcome Page";
             </div>
             <div class="list-group">
                <a href="admin.php" class="list-group-item list-group-item-action"><i class="fas fa-cog pr-2"></i>Manage Articles</a>
-                <a href="admin.php?action=resetpassword" class="list-group-item list-group-item-action list-group-item-warning"><i class="fas fa-unlock-alt pr-2"></i>Reset Password</a>
-                <a href="admin.php?action=logout" class="list-group-item list-group-item-action list-group-item-dark"><i class="fas fa-power-off pr-2"></i>Sign Out</a>
+                <a href="admin.php?action=resetpassword" class="list-group-item list-group-item-action"><i class="fas fa-unlock-alt pr-2"></i>Reset Password</a>
+                <a href="admin.php?action=logout" class="list-group-item list-group-item-action"><i class="fas fa-power-off pr-2"></i>Sign Out</a>
             </p>
         </div>
     </div>
