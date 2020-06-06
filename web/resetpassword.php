@@ -73,7 +73,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post"> 
             <div class="form-group <?php echo (!empty($new_password_err)) ? 'has-error' : ''; ?>">
                 <label>New Password</label>
-                <input type="password" name="new_password" class="form-control" value="<?php echo $new_password; ?>">
+                <input type="password" name="new_password" class="form-control" value="<?php echo $new_password; ?> autofocus">
                 <span class="help-block"><?php echo $new_password_err; ?></span>
             </div>
             <div class="form-group <?php echo (!empty($confirm_password_err)) ? 'has-error' : ''; ?>">
@@ -82,7 +82,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 <span class="help-block"><?php echo $confirm_password_err; ?></span>
             </div>
             <div class="form-group">
-                <input type="submit" class="btn btn-primary" value="Submit">
+                <input type="submit" class="btn btn-dark" value="Submit">
                 <a class="btn btn-link" href="index.php?action=homepage">Cancel</a>
             </div>
         </form>

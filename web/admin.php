@@ -128,7 +128,11 @@ function editArticle() {
         elseif (isset($_POST['cancel'])) 
         {
             header("Location: admin.php");
-        } 
+        }
+        elseif (isset($_POST['deleteArticle']))
+        {
+            deleteArticle();
+        }
         else 
         {
             $results['article'] = Article::getById((int)$_GET['articleId']);
@@ -143,7 +147,7 @@ function editArticle() {
 }
 
 
-function deleteArticle() {
+function deleteArticle() {    
     if (!$article = Article::getById((int)$_GET['articleId'])) 
     {
         header("Location: admin.php?error=articleNotFound");

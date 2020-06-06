@@ -18,13 +18,11 @@
                     <textarea class="form-control" name="content" id="content" placeholder="The content of the article" required maxlength="100000" rows="5"><?php echo htmlspecialchars($results['article']->content)?></textarea>
                 </div>
                 <div class="buttons">
-                    <input type="submit" class="btn btn-primary" name="saveChanges" value="Save Changes" />
+                    <input type="submit" class="btn btn-dark" name="saveChanges" value="Save Changes" />
                     <input type="submit" class="btn btn-outline-dark" formnovalidate name="cancel" value="Cancel" />
+                    <input type="submit" class="btn btn-danger" formnovalidate name="deleteArticle" value="Delete" /> 
                 </div>
             </form>
-            <?php if ($results['article']->id) { ?>
-            <a href="admin.php?action=deleteArticle&amp;articleId=<?php echo $results['article']->id ?>" onclick="return confirm('Delete This Article?')" class="btn btn-danger"><i class="fa fa-trash-o pr-2"></i>Delete</a>
-            <?php } ?>
         </div>
     </div>
 </body>
