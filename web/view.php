@@ -16,7 +16,7 @@
                 {
                     echo '<div class="buttons pt-3">
                     <a type="button" class="btn btn-dark" href="admin.php?action=editArticle&articleId=' . $results['article']->id . '"><i class="fas fa-pen pr-2"></i>Edit</a>
-                    <a href="" id="delete" class="btn btn-outline-danger"><i class="fa fa-trash-o pr-2"></i>Delete</a>
+                    <button type="button" class="btn btn-outline-danger" data-toggle"modal" data-target="#deleteModal"><i class="fa fa-trash-o pr-2"></i>Delete</button>
                     <?php } ?>   
                 </div>';
                 }
@@ -24,12 +24,28 @@
             ?>
             </div>
         </div>
+       <div class="modal" tabindex="-1" role="dialog" id="deleteModal">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Delete this article?</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <p>Once this article is deleted, it cannot be recovered. Are you sure you want to continue?</p>
+              </div>
+              <div class="modal-footer d-flex justify-content-left">
+                <button type="button" class="btn btn-danger" id="deleteConfirm">Delete</button>
+                <button type="button" class="btn btn-outline-dark" data-dismiss="modal">Cancel</button>
+              </div>
+            </div>
+          </div>
+        </div>
             <script type="text/javascript">
-        $('#delete').on('click', function() {
-            if (return confirm('Are you sure?'))
-                {
+        $('#deleteConfirm').on('click', function() {
                     $.post("admin.php", { action: "deleteArticle", articleId: "<?php echo $results['article']->id ?>" });
-                }
         });
     </script>
 </body>
