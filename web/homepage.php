@@ -4,8 +4,8 @@
     <?php include "include/navbar.php" ?>
     <div class="container-fluid d-flex justify-content-center">
         <div class="list-group">
-        <div class="d-inline-flex">
-        <h3>Latest News</h3><i class="fas fa-chevron-right"></i>
+        <div class="d-inline-flex align-items-baseline py-5">
+        <h3>Latest Articles</h3><i class="fas fa-chevron-right"></i>
         </div>
             <?php foreach ($results['articles'] as $article) { ?>
             <a href="index.php?action=viewArticle&amp;articleId=<?php echo $article->id?>" class="list-group-item list-group-item-action flex-column align-items-start">
