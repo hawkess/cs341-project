@@ -26,7 +26,7 @@
                 {
                     echo '<div class="buttons pt-3">
                     <a type="button" class="btn btn-dark" href="admin.php?action=editArticle&articleId=' . $results['article']->id . '"><i class="fas fa-pen pr-2"></i>Edit</a>
-                    <button type="button" class="btn btn-outline-danger" data-toggle"modal" data-target="#deleteModal"><i class="fa fa-trash-o pr-2"></i>Delete</button>
+                    <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#deleteModal"><i class="fa fa-trash-o pr-2"></i>Delete</button>
                     <?php } ?>
             </div>';
             }
