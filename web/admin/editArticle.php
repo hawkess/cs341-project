@@ -3,8 +3,8 @@
     <?php include "include/navbar.php" ?>
     <div class="container-fluid d-flex justify-content-center">        
         <div class="container w-25 m-auto py-5">
-        <h2 class="ml-1"><?php echo $results['pageTitle']?></h2>
-            <form class="py-2" action="admin.php?action=<?php echo $results['formAction']?>" method="post">
+        <h3 class="pb-4"><?php echo $results['pageTitle']?></h3>
+            <form action="admin.php?action=<?php echo $results['formAction']?>" method="post">
                 <input type="hidden" name="articleId" value="<?php echo $results['article']->id ?>" />
                 <?php if (isset($results['errorMessage'])) { ?>
                 <div class="errorMessage"><?php echo $results['errorMessage'] ?></div>

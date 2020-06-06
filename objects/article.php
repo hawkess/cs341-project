@@ -134,7 +134,7 @@ class Article
             $st->execute();
             $count = $st->rowCount();
             $conn = null;
-            return count;
+            return $count;
         }
         else
         {
