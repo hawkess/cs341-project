@@ -46,7 +46,7 @@
                 <div class="modal-body">
                     <p>Once this article is deleted, it cannot be recovered. Are you sure you want to continue?</p>
                 </div>
-                <div class="modal-footer d-flex justify-content-left">
+                <div class="modal-footer">
                     <button type="button" class="btn btn-danger" id="deleteConfirm">Delete</button>
                     <button type="button" class="btn btn-outline-dark" data-dismiss="modal">Cancel</button>
                 </div>
