@@ -5,9 +5,7 @@
     <div class="container-fluid d-flex justify-content-center">
     <div class="w-25 m-auto py-5">
         <div class="list-group">
-        <div class="d-inline-flex align-items-center py-5">
-        <h3>Latest Articles</h3><i class="fas fa-3x fa-chevron-right"></i>
-        </div>
+        <h3>Latest Articles</h3>
             <?php foreach ($results['articles'] as $article) { ?>
             <a href="index.php?action=viewArticle&amp;articleId=<?php echo $article->id?>" class="list-group-item list-group-item-action flex-column align-items-start">
                 <div class="d-flex w-100 justify-content-between">
