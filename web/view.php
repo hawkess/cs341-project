@@ -1,9 +1,10 @@
 <?php include "include/header.php" ?>
 <?php if(session_status() === PHP_SESSION_NONE) session_start(); ?>
 <script type="text/javascript">
-    $('#deleteConfirm').on('click', function() {
+    $(document).on('click', '#deleteConfirm', function() {
+        event.preventDefault();
         console.log("This worked.");
-        $('#deleteModal').model('dispose');
+        $('#deleteModal').modal('dispose');
         $.post("admin.php", {
             action: "deleteArticle",
             articleId: "<?php echo $results['article']->id ?>"
