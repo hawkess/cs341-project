@@ -1,5 +1,4 @@
 <?php include "include/header.php" ?>
-
 <body>
     <?php include "include/navbar.php" ?>
     <div class="container-fluid d-flex justify-content-center">        
@@ -19,7 +18,7 @@
                     <textarea class="form-control" name="content" id="content" placeholder="The content of the article" required maxlength="100000" rows="5"><?php echo htmlspecialchars($results['article']->content)?></textarea>
                 </div>
                 <div class="buttons">
-                    <input type="submit" class="btn btn-success" name="saveChanges" value="Save Changes" />
+                    <input type="submit" class="btn btn-primary" name="saveChanges" value="Save Changes" />
                     <input type="submit" class="btn btn-outline-danger" formnovalidate name="cancel" value="Cancel" />
                 </div>
             </form>
