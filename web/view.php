@@ -8,6 +8,7 @@
         $.post("admin.php?action=deleteArticle", {
             articleId: "<?php echo $results['article']->id ?>"
         }, function(data) {
+            console.log(data);
             if (data == 'success') {
                 window.location.href = "admin.php?status=articleDeleted";
             }
@@ -21,7 +22,11 @@
 
 <body>
     <?php include "include/navbar.php" ?>
-
+    <?php 
+    if (!isset($results['article'])) 
+    {
+        header("location: index.php");
+    }
     <div class="container-fluid d-flex justify-content-center">
         <div class="w-25 m-auto py-5">
             <h3><?php echo htmlspecialchars($results['article']->title)?></h3>
