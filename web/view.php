@@ -4,9 +4,8 @@
     $(document).on('click', '#deleteConfirm', function() {
         event.preventDefault();
         console.log("This worked.");
-        $('#deleteModal').modal('dispose');
-        $.post("admin.php", {
-            action: "deleteArticle",
+        $('#deleteModal').modal('hide');
+        $.post("admin.php?deleteArticle", {
             articleId: "<?php echo $results['article']->id ?>"
         });        
     });
