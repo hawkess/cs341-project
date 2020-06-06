@@ -1,5 +1,5 @@
 <?php if(session_status() === PHP_SESSION_NONE) session_start(); ?>
- <nav class="navbar navbar-expand-lg navbar-light bg-light">
+ <nav class="navbar navbar-dark bg-dark navbar-expand-lg sticky-top">
   <a class="navbar-brand" href="homepage.php">CSE 341 CMS</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
