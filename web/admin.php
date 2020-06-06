@@ -152,10 +152,8 @@ function deleteArticle() {
     
     if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) 
     {
-          if ($article->delete($_SESSION["user_id"]) > 0)
-              echo 'success';
-            else 
-                echo 'failed';
+        $result = $article->delete($_SESSION["user_id"]);
+        echo $result;
     }
     else
     {

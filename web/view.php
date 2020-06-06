@@ -9,7 +9,7 @@
             articleId: "<?php echo $results['article']->id ?>"
         }, function(data) {
             console.log(data);
-            if (data == 'success') {
+            if (data > 0) {
                 window.location.href = "admin.php?status=articleDeleted";
             }
             else {
