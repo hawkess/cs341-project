@@ -132,7 +132,9 @@ class Article
             $st = $conn->prepare ("DELETE FROM articles WHERE id = :id");
             $st->bindValue(":id", $this->id, PDO::PARAM_INT);
             $st->execute();
+            $count = $st->rowCount();
             $conn = null;
+            return count;
         }
         else
         {

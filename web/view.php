@@ -7,6 +7,13 @@
         $('#deleteModal').modal('hide');
         $.post("admin.php?action=deleteArticle", {
             articleId: "<?php echo $results['article']->id ?>"
+        }, function(data) {
+            if (data == 'success') {
+                window.location.href = "admin.php?status=articleDeleted";
+            }
+            else {
+                window.location.href = "admin.php?status=articleNotFound";
+            }
         });        
     });
 

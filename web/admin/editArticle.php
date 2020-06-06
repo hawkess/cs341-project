@@ -18,7 +18,7 @@
                     <textarea class="form-control" name="content" id="content" placeholder="The content of the article" required maxlength="100000" rows="5"><?php echo htmlspecialchars($results['article']->content)?></textarea>
                 </div>
                 <div class="buttons">
-                    <input type="submit" class="btn btn-primary" name="saveChanges" value="Save Changes" />
+                    <input type="submit" class="btn btn-dark" name="saveChanges" value="Save Changes" />
                     <input type="submit" class="btn btn-outline-dark" formnovalidate name="cancel" value="Cancel" />
                 </div>
             </form>
