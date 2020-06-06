@@ -1,18 +1,20 @@
 <?php include "include/header.php" ?>
 <?php if(session_status() === PHP_SESSION_NONE) session_start(); ?>
+<script type="text/javascript">
+    $('#deleteConfirm').on('click', function() {
+        console.log("This worked.");
+        $('#deleteModal').model('dispose');
+        $.post("admin.php", {
+            action: "deleteArticle",
+            articleId: "<?php echo $results['article']->id ?>"
+        });        
+    });
+
+</script>
 
 <body>
     <?php include "include/navbar.php" ?>
-    <script type="text/javascript">
-        $('#deleteConfirm').on('click', function() {
-            console.log("This worked.");
-            $.post("admin.php", {
-                action: "deleteArticle",
-                articleId: "<?php echo $results['article']->id ?>"
-            });
-        });
 
-    </script>
     <div class="container-fluid d-flex justify-content-center">
         <div class="w-25 m-auto py-5">
             <h3><?php echo htmlspecialchars($results['article']->title)?></h3>
