@@ -15,11 +15,13 @@ $results['pageTitle'] = "CSE 341 Welcome Page";
             <div class="page-header">
                 <h2>Hello, <b><?php echo htmlspecialchars($_SESSION["username"]); ?></b>.</h1>
             </div>
-            <p>
-                <a href="admin.php?action=resetpassword" class="btn btn-warning"><i class="fas fa-unlock-alt pr-2"></i>Reset Password</a>
-                <a href="admin.php?action=logout" class="btn btn-danger"><i class="fas fa-power-off pr-2"></i>Sign Out</a>
+            <div class="list-group">
+               <a href="admin.php" class="list-group-item list-group-item-action"><i class="fas fa-cog pr-2"></i>Manage Articles</a>
+                <a href="admin.php?action=resetpassword" class="list-group-item list-group-item-action list-group-item-warning"><i class="fas fa-unlock-alt pr-2"></i>Reset Password</a>
+                <a href="admin.php?action=logout" class="list-group-item list-group-item-action list-group-item-secondary"><i class="fas fa-power-off pr-2"></i>Sign Out</a>
             </p>
         </div>
     </div>
 </body>
 </html>
+

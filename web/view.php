@@ -9,12 +9,12 @@
             articleId: "<?php echo $results['article']->id ?>"
         }, function(data) {
             console.log(data); 
-           // if (data > 0) {
-//                window.location.href = "admin.php?status=articleDeleted";
-//            }
-//            else {
-//                window.location.href = "admin.php?status=articleNotFound";
-//            }
+            if (data > 0) {
+                window.location.href = "admin.php?status=articleDeleted";
+            }
+            else {
+                window.location.href = "admin.php?status=articleNotFound";
+            }
         });        
     });
 
