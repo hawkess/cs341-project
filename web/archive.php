@@ -1,9 +1,9 @@
 <?php include "include/header.php" ?>
 <body>
    <?php include "include/navbar.php" ?>        
-    <div class="container-fluid d-flex justify-content-center">
-       <h1>Article Archive</h1>
+    <div class="container-fluid d-flex justify-content-center">       
         <div class="list-group">
+           <h3>Archives</h3>
             <?php foreach ($results['articles'] as $article) { ?>
             <a href="index.php?action=viewArticle&amp;articleId=<?php echo $article->id?>" class="list-group-item list-group-item-action flex-column align-items-start">
                 <div class="d-flex w-100 justify-content-between">
