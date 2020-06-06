@@ -16,8 +16,8 @@ $results['pageTitle'] = "CSE 341 Welcome Page";
         <h2>Hello, <b><?php echo htmlspecialchars($_SESSION["username"]); ?></b>.</h1>
     </div>
     <p>
-        <a href="admin.php?action=resetpassword" class="btn btn-warning"><i class="fas fa-unlock-alt fa-lg"></i>Reset Password</a>
-        <a href="admin.php?action=logout" class="btn btn-danger"><i class="fas fa-power-off fa-lg"></i>Sign Out</a>
+        <a href="admin.php?action=resetpassword" class="btn btn-warning"><i class="fas fa-unlock-alt px-1"></i>Reset Password</a>
+        <a href="admin.php?action=logout" class="btn btn-danger"><i class="fas fa-power-off px-1"></i>Sign Out</a>
     </p>
     </div>
     </div>

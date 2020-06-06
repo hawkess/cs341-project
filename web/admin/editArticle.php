@@ -20,7 +20,7 @@
                 </div>
                 <div class="buttons">
                     <input type="submit" class="btn btn-success" name="saveChanges" value="Save Changes" />
-                    <input type="submit" class="btn btn-danger" formnovalidate name="cancel" value="Cancel" />
+                    <input type="submit" class="btn btn-outline-danger" formnovalidate name="cancel" value="Cancel" />
                 </div>
             </form>
             <?php if ($results['article']->id) { ?>
