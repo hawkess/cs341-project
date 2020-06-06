@@ -18,8 +18,8 @@
                     <small>Submitted by <?php echo $article->author?></small>
                 </a>
                 <?php } ?>
-            </div>
-            <a href="admin.php?action=newArticle" class="btn btn-outline-dark pt-5"><i class="fas fa-plus px-1"></i>Create New Article</a>
+                <a href="admin.php?action=newArticle" class="btn btn-outline-dark mt-3"><i class="fas fa-plus px-1"></i>Create New Article</a>
+            </div>            
         </div>
     </div>
 </body>

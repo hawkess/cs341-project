@@ -19,11 +19,11 @@
                 </div>
                 <div class="buttons">
                     <input type="submit" class="btn btn-primary" name="saveChanges" value="Save Changes" />
-                    <input type="submit" class="btn btn-outline-danger" formnovalidate name="cancel" value="Cancel" />
+                    <input type="submit" class="btn btn-outline-dark" formnovalidate name="cancel" value="Cancel" />
                 </div>
             </form>
             <?php if ($results['article']->id) { ?>
-            <a href="admin.php?action=deleteArticle&amp;articleId=<?php echo $results['article']->id ?>" onclick="return confirm('Delete This Article?')">Delete This Article</a>
+            <a href="admin.php?action=deleteArticle&amp;articleId=<?php echo $results['article']->id ?>" onclick="return confirm('Delete This Article?')" class="btn btn-danger"><i class="fa fa-trash-o pr-2"></i>Delete</a>
             <?php } ?>
         </div>
     </div>
